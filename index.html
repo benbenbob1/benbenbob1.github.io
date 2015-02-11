@@ -46,6 +46,9 @@
 			return out;
 		}
 	}
+	function showResume() {
+		window.open("https://www.dropbox.com/s/3i0e8vu47lj7ehk/Ben%20Brown%20-%20Resume.pdf?dl=0");
+	}
 	function contactCommand(args) {
 		var result = '';
 		if (args[1] === "-f") { 
@@ -54,6 +57,9 @@
 		} else if (args[1] === "-t") {
 			result = 'Opening twitter...';
 			$('#twitter-button').click();
+		} else if (args[1] === "-r") {
+			result = 'Opening resume...';
+			showResume();
 		} else if (args[1] === "-l") {
 			result = 'Opening LinkedIn...';
 			$('#in-button').click();
@@ -61,7 +67,7 @@
 			result = 'Opening email client...';
 			$('#email-button').click();
 		} else {
-			result = 'usage: contact -ftle\n\tfind me on:\n\t\t-f Facebook\n\t\t-t Twitter\n\t\t-l LinkedIn\n\t\t-e Email';
+			result = 'usage: contact -ftler\n\tfind me on:\n\t\t-f Facebook\n\t\t-t Twitter\n\t\t-l LinkedIn\n\t\t-e Email\n\t-r View my resume';
 		}
 		return result;
 	}
@@ -103,6 +109,8 @@
 			return skillsCommand(args);
 		} else if (cmd == "skillz") {
 			return skillzCommand(args);
+		} else if (cmd == "resume") {
+			return showResume();
 		} else if (cmd == "cat") {
 			return catCommand(args);
 		} else if (cmd == "about") {
