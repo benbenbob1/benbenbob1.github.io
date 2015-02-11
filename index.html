@@ -72,10 +72,10 @@
 		return "\n‘« Stuff »’\nSome things I've done:\n • Created a Bluetooth audio receiver using a Raspberry Pi, C, and a few shell scripts\n • Created a webserver and associated iPhone app to control the led light strips in my room using a custom circuit, said Raspberry Pi, C, and Objective-C\n • Wrote a program that takes the music I'm listening to and makes the lights respond to the music using C\n • Wrote this website in JavaScript :)\n";
 	}
 	function skillsCommand(args) {
-		return "\n‘« My Skills »’\nWhat I can do:\n\tC\t\t[«          »]\n\tC++\t\t[«        »  ]\n\tObjective-C\t[«          »]\n\tJava\t\t[«        »  ]\n\tHTML5\t\t[«      »    ]\n\tJavaScript\t[«         » ]\n\tjQuery\t\t[«        »  ]\n\tPHP\t\t[«     »     ]\n\tPython\t\t[«       »   ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism\n\n";
+		return "\n‘« My Skills »’\nWhat I can do:\n\tC\t\t[«          »]\n\tC++\t\t[«        »  ]\n\tObjective-C\t[«          »]\n\tSwift\t\t[«       »   ]\n\tJava\t\t[«        »  ]\n\tHTML5\t\t[«      »    ]\n\tJavaScript\t[«         » ]\n\tjQuery\t\t[«        »  ]\n\tPHP\t\t[«     »     ]\n\tPython\t\t[«       »   ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism\n\n";
 	}
 	function skillzCommand(args) {
-		return "\n‘« Ma $killz »’\nWhat I can programmerate:\n\tCizzle\t\t[«          »]\n\tCizzle++\t[«        »  ]\n\tObjectin-Cizzle\t[«          »]\n\tMakin a brew\t[«        »  ]\n\tHTML$\t\t[«      »    ]\n\tJavaScrizzle\t[«         » ]\n\tjQuerian\t[«        »  ]\n\tHIP\t\t[«     »     ]\n\tDa snake\t[«       »   ]\n\nNah:\n\tBrow liftin\n\tPie bakin\n\tExorcisin'\n\n";
+		return "\n‘« Ma $killz »’\nWhat I can programmerate:\n\tCizzle\t\t[«          »]\n\tCizzle++\t[«        »  ]\n\tObjectin-Cizzle\t[«          »]\n\t$wift\t\t[«       »   ]\n\tMakin a brew\t[«        »  ]\n\tHTMLFam\t\t[«      »    ]\n\tJavaScrizzle\t[«         » ]\n\tjQuerian\t[«        »  ]\n\tHIP\t\t[«     »     ]\n\tDa snake\t[«       »   ]\n\nNah:\n\tBrow liftin\n\tPie bakin\n\tExorcisin'\n\n";
 	}
 	function evaluate(str) {
 		var elem = $(".element");
@@ -94,7 +94,7 @@
 		} else if (cmd == "help") {
 			result = "\nabout: all about me, Ben Brown!\nskills: what can I do for you?\nstuff: some things I've done\ncontact: how to find me\n\nSome commands:\n\techo\tcat\tls\nMore commands to come!";
 		} else if (cmd == "hello") {
-			result = "\nhey there!";
+			result = "hey there!";
 		} else if (cmd == "contact") {
 			return contactCommand(args);
 		} else if (cmd == "stuff") {
