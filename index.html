@@ -48,6 +48,7 @@
 	}
 	function showResume() {
 		window.open("https://www.dropbox.com/s/3i0e8vu47lj7ehk/Ben%20Brown%20-%20Resume.pdf?dl=0");
+		return "Opening resume...";
 	}
 	function contactCommand(args) {
 		var result = '';
@@ -58,8 +59,7 @@
 			result = 'Opening twitter...';
 			$('#twitter-button').click();
 		} else if (args[1] === "-r") {
-			result = 'Opening resume...';
-			showResume();
+			result = showResume();
 		} else if (args[1] === "-l") {
 			result = 'Opening LinkedIn...';
 			$('#in-button').click();
@@ -643,6 +643,7 @@ Try these commands:
 <br />about
 <br />skills
 <br />stuff
+<br />resume
 <br />contact -e
 </div>
 <div id="contactmenu_container" class="title_hero highlighted">
