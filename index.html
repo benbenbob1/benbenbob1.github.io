@@ -13,13 +13,13 @@
 	var twitterLink = "http://www.twitter.com/benbenbobsoft";
 	var liLink = "https://www.linkedin.com/profile/view?id=327054241";
 	var mailLink = "mailto:benbrown52@gmail.com";
-	var gitHubLink = "http://www.github.com/benbenbob1";
+	var ghLink = "http://www.github.com/benbenbob1";
 	function setupLinks() {
 		document.getElementById('fb-button').onclick = function(){window.open(fbLink);};
 		document.getElementById('twitter-button').onclick = function(){window.open(twitterLink);};
 		document.getElementById('in-button').onclick = function(){window.open(liLink);};
 		document.getElementById('email-button').onclick = function(){window.location = mailLink;};
-		document.getElementById('gh-button').onclick = function(){window.location = gitHubLink;};
+		document.getElementById('gh-button').onclick = function(){window.open(ghLink);};
 	}
 	function showSidebar() {
 		$('#cmdList').show('slide', {direction: 'right'}, 500);
@@ -72,7 +72,7 @@
 			result = 'Opening email client...';
 			$('#email-button').click();
 		} else {
-			result = 'usage: contact -ftler\n\tfind me on:\n\t\t-f Facebook\n\t\t-t Twitter\n\t\t-l LinkedIn\n\t\t-g GitHub\n\t\t-e Email\n\t-r View my resume';
+			result = 'usage: contact -ftlger\n\tfind me on:\n\t\t-f Facebook\n\t\t-t Twitter\n\t\t-l LinkedIn\n\t\t-g GitHub\n\t\t-e Email\n\t-r View my resume';
 		}
 		return result;
 	}
