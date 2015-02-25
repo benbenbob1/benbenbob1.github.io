@@ -13,11 +13,13 @@
 	var twitterLink = "http://www.twitter.com/benbenbobsoft";
 	var liLink = "https://www.linkedin.com/profile/view?id=327054241";
 	var mailLink = "mailto:benbrown52@gmail.com";
+	var gitHubLink = "http://www.github.com/benbenbob1";
 	function setupLinks() {
 		document.getElementById('fb-button').onclick = function(){window.open(fbLink);};
 		document.getElementById('twitter-button').onclick = function(){window.open(twitterLink);};
 		document.getElementById('in-button').onclick = function(){window.open(liLink);};
 		document.getElementById('email-button').onclick = function(){window.location = mailLink;};
+		document.getElementById('gh-button').onclick = function(){window.location = gitHubLink;};
 	}
 	function showSidebar() {
 		$('#cmdList').show('slide', {direction: 'right'}, 500);
@@ -63,11 +65,14 @@
 		} else if (args[1] === "-l") {
 			result = 'Opening LinkedIn...';
 			$('#in-button').click();
+		} else if (args[1] === "-g") {
+			result = 'Opening GitHub...';
+			$('#gh-button').click();
 		} else if (args[1] === "-e") {
 			result = 'Opening email client...';
 			$('#email-button').click();
 		} else {
-			result = 'usage: contact -ftler\n\tfind me on:\n\t\t-f Facebook\n\t\t-t Twitter\n\t\t-l LinkedIn\n\t\t-e Email\n\t-r View my resume';
+			result = 'usage: contact -ftler\n\tfind me on:\n\t\t-f Facebook\n\t\t-t Twitter\n\t\t-l LinkedIn\n\t\t-g GitHub\n\t\t-e Email\n\t-r View my resume';
 		}
 		return result;
 	}
@@ -340,9 +345,10 @@ $(function(){
 				var second = text.indexOf("’");
 				var full = text.substring(first, second+1);
 				var inside = full.substring(1, full.length-1);
-				//var replacement = "<div class='centered'>"+inside+"</div>";	// <- this MUST be a span element
-																				// or it will separate existing span
-																				// and cause a text resizing bug
+				//var replacement = "<div class='centered'>"+inside+"</div>";	
+				// |_ this MUST be a span element
+				// or it will separate existing span
+				//and cause a text resizing bug
 				//var replacement = "<div style='text-align: center;'>"+inside+"</div>";
 				var replacement = "\t\t"+inside;
 				text = text.replace(full, replacement);
@@ -649,7 +655,8 @@ Try these commands:
 <div id="contactmenu_container" class="title_hero highlighted">
 	<span id="fb-button" title="facebook">f</span>
 	<span id="twitter-button" title="twitter">t</span>
-	<span id="in-button" title="LinkedIn">in</span>
+	<span id="in-button" title="linkedin">in</span>
+	<span id="gh-button" title="github">git</span>
 	<span id="email-button" title="email">@</span>
 </div>
 <div id="mobile_helper" onclick="mobileShowKeyboard()"><span class="va">Click to show keyboard</span></div>
