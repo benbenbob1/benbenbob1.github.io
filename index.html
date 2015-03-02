@@ -129,7 +129,7 @@
 				if (!data) { result = "-bbcs: " + cmd + ": command not found"; }
 				else { result = data.replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 			}).fail (function() { result = 'command failed'; });*/
-			result = "-"+shortName": " + cmd + ": command not found";
+			result = "-" + shortName + ": " + cmd + ": command not found";
 		}
 		return result;
 	}
@@ -143,8 +143,6 @@
 		$('#textinput').onblur = function() {mobileKeyboardHidden();};
 		$('#textinput').focus();
 	}
-</script>
-<script>
 /*
 	To-do: fix mobile device text resizing 
 
