@@ -14,9 +14,6 @@
 	var liLink = "https://www.linkedin.com/profile/view?id=327054241";
 	var mailLink = "mailto:benbrown52@gmail.com";
 	var ghLink = "http://www.github.com/benbenbob1";
-	var siteName = "benbenbob1.github.io";
-	var shortName = "bbb";
-	var version = 0.83;
 	function setupLinks() {
 		document.getElementById('fb-button').onclick = function(){window.open(fbLink);};
 		document.getElementById('twitter-button').onclick = function(){window.open(twitterLink);};
@@ -247,6 +244,9 @@ $(function(){
 	var command = '';
 	//var timingOrExtra = beenHereBefore?('\n'+$.cookie('lastdate')):'^1000';
 	var timingOrExtra = beenHereBefore?'\nWelcome back!^500':'^1000';
+	var siteName = "benbenbob1.github.io";
+	var shortName = "bbb";
+	var version = 0.83;
 	//BenBrownCS.com
 	var toType = siteName+', version '+version+' initialized.'+timingOrExtra+'\n\n'+thePrompt;
 	var cmds = [];
