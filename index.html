@@ -9,8 +9,10 @@
 <script src="typed.js"></script>
 <script src="jquery.cookie.js"></script>
 <script type="text/javascript">
-	var siteName = "benbenbob1.github.io";
-	var shortName = "bbb";
+	//var siteName = "benbenbob1.github.io";
+	var siteName = "benbrown.science";
+	//var shortName = "bbb";
+	var shortName = "bbs";
 	var version = 0.83;
 
 	/*
@@ -148,8 +150,8 @@
 		return result;
 	}
 	function mobileKeyboardHidden() {
-		$('#textinput').hide();
 		$('#mobile_helper').fadeIn('fast');
+		$('#textinput').hide();
 	}
 	function mobileShowKeyboard() {
 		$('#mobile_helper').fadeOut('fast');
@@ -219,18 +221,15 @@ $(function(){
     	if (!device) {
 			window.scrollTo(0,document.body.scrollHeight);
 		} else {
-			var elem = $(".element");
-			var tinput = $('#textinput');
-			//tinput.height(elem.height());
-			var newHeight = (tinput.height()*2)+"px";
-			tinput.css('line-height', newHeight);
-			/*var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-			if (elem.height() < h) {
-				window.scrollTo(0,0);
+			if (document.body.scrollHeight > window.innerHeight) {
+				var elem = $(".element");
+				var tinput = $('#textinput');
+				//tinput.height(elem.height());
+				var newHeight = (tinput.height()+30)+"px";
+				tinput.css('line-height', newHeight);
 			} else {
-				window.scrollTo(0,document.body.scrollHeight);
-			}*/
-			
+				window.scrollTo(0, 0);
+			}
 		}
     }
 
