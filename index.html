@@ -15,15 +15,82 @@
 	var shortName = "bbs";
 	var version = 0.83;
 
+	var textColor, backgroundColor, linkColor, prompt, cursor, fontSize;
+
+	var extra = '';
+	var beginning = '';
+	var extraSize = 0;
+	var command = '';
+
 	/*
-	TO DO: colors
-	function setStyle() {
-		document.getElementsByTagName("html")[0].style.backgroundColor = "white";
-		document.getElementsByClassName("title_hero")[0].style.color = "black";
-		document.getElementsByClassName("typed-cursor")[0].style.color = "black";
-		document.getElementsByClassName("highlighted")[0].style.backgroundColor = "black";
-		document.getElementsByClassName("highlighted")[0].style.color = "white";
-	}*/
+	 * Colors: 
+	 *		Macintosh Terminal (default): 
+	 *				Text: '#28FE14'
+	 *				Background: 'black'
+	 *				Prompt: '/var/root$ ' (space at end intentional)
+	 *				LinkColor: 'white'
+	 *				Cursor: '▋'
+	 *		Windows Command Prompt:
+	 *		 		Text: 'white'
+	 *				Background: 'black'
+	 *				LinkColor: 'blue'
+	 *				Prompt: '>'
+	 *				Cursor: '_'
+	 */
+	
+	//TO DO: colors
+	function setStyle(style) {
+		if (!style || style.legth == 0) {var style = "terminal";}
+		var isDefault = style == "terminal";
+		if (style == "terminal") {
+			textColor = '#28FE14';
+			backgroundColor = 'black';
+			linkColor = 'white';
+			prompt = '/var/root$ ';
+			cursor = '▋';
+			fontSize = '16px';
+		} else if (style == "msdos") {
+			textColor = 'white';
+			backgroundColor = 'black';
+			linkColor = 'blue';
+			prompt = 'C:\\>';
+			cursor = '͟';
+			fontSize = '16px';
+		} else {
+			return setStyle("");
+		}
+
+		document.getElementsByTagName("html")[0].style.backgroundColor = backgroundColor;
+		
+		if (document.getElementsByClassName("typed-cursor").length >= 1) {
+
+			var text = $(".title_hero");
+			var i = 0; //Don't want everything changing
+			//for (var i=0; i<text.length; i++) {
+				$(text[i]).css("font-size", fontSize);
+				$(text[i]).css("color", textColor);
+			//}
+
+			document.getElementsByClassName("typed-cursor")[0].style.color = textColor;
+			document.getElementsByClassName("typed-cursor")[0].innerHTML = cursor;
+
+			var highlighted = $(".highlighted");
+			for (var i=0; i<highlighted.length; i++) {
+				//console.log($(highlighted[i]).css("background-color"));
+				highlighted[i].style.backgroundColor = textColor;
+				highlighted[i].style.color = backgroundColor;
+			}
+
+			/*var links = document.getElementsByClassName("title_hero highlighted");
+			for (var i=0; i<links.length; i++) {
+				console.log(links[i].children);
+			}*/
+		}
+		var str = "Style changed to "+style;
+		if (isDefault) { str += " (default)"; }
+		str += ".";
+		return str;
+	}
 
 	var fbLink = "https://www.facebook.com/benbenbobsoftware";
 	var twitterLink = "http://www.twitter.com/benbenbobsoft";
@@ -53,16 +120,16 @@
 	function catCommand(args) {
 		if (args.length < 2 || args[1] == ' ' || args[1] == '') {
 			return 'usage: cat file1\n\tprints the contents of <u>file1</u>.';
-		} if (args[1] == 'index.html' || args[1] == '.' || args[1] == '/' || args[1] == 'index') {
+		} 
+		if (args[1] == 'index.html' || args[1] == '.' || args[1] == '/' || args[1] == 'index') {
 			return 'why don\'t you just view the source?';
-		} else {
-			var out = '';
-			$.ajaxSetup({async: false, timeout: 5000});
-			var jqxhr = $.get( args[1], function( data ) {
-				out = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-			}).fail (function() { out = 'read failed'; });
-			return out;
 		}
+		var out = '';
+		$.ajaxSetup({async: false, timeout: 5000});
+		var jqxhr = $.get( args[1], function( data ) {
+			out = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		}).fail (function() { out = 'read failed'; });
+		return out;
 	}
 	function showResume() {
 		window.open("https://www.dropbox.com/s/3i0e8vu47lj7ehk/Ben%20Brown%20-%20Resume.pdf?dl=0");
@@ -93,16 +160,30 @@
 		return result;
 	}
 	function aboutCommand(args) {
-		return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend designer.\n\nAlso, I am really cool.\n\n";
+		return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend designer.\n\nAlso, I am really cool.";
+	}
+	function clearCommand(args) {
+		beginning = '';
+		extra = '';
+		extraSize = 0;
+		return 'Screen cleared.';
+	}
+	function styleCommand(args) {
+		if (args.length != 2 || args[1] == '') {
+			return 'usage: style colorscheme\n\twhere colorscheme is one of:\n\t\tterminal\n\t\tmsdos';
+		}
+		var result = setStyle(args[1]);
+		clearCommand('');
+		return result;
 	}
 	function stuffCommand(args) {
-		return "\n‘« Stuff »’\nSome things I've done:\n • Created a Bluetooth audio receiver using a Raspberry Pi, C, and a few shell scripts\n • Created a webserver and associated iPhone app to control the led light strips in my room using a custom circuit, said Raspberry Pi, C, and Objective-C\n • Wrote a program that takes the music I'm listening to and makes the lights respond to the music using C\n • Wrote this website in JavaScript :)\n";
+		return "\n‘« Stuff »’\nSome things I've done:\n • Created a Bluetooth audio receiver using a Raspberry Pi, C, and a few shell scripts\n • Created a webserver and associated iPhone app to control the led light strips in my room using a custom circuit, said Raspberry Pi, C, and Objective-C\n • Wrote a program that takes the music I'm listening to and makes the lights respond to the music using C\n • Wrote this website in JavaScript :)";
 	}
 	function skillsCommand(args) {
-		return "\n‘« My Skills »’\nWhat I can do:\n\tC\t\t[«          »]\n\tC++\t\t[«        »  ]\n\tObjective-C\t[«          »]\n\tSwift\t\t[«       »   ]\n\tJava\t\t[«        »  ]\n\tHTML5\t\t[«      »    ]\n\tJavaScript\t[«         » ]\n\tjQuery\t\t[«        »  ]\n\tPHP\t\t[«     »     ]\n\tPython\t\t[«       »   ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism\n\n";
+		return "\n‘« My Skills »’\nWhat I can do:\n\tC\t\t[«          »]\n\tC++\t\t[«        »  ]\n\tObjective-C\t[«          »]\n\tSwift\t\t[«       »   ]\n\tJava\t\t[«        »  ]\n\tHTML5\t\t[«      »    ]\n\tJavaScript\t[«         » ]\n\tjQuery\t\t[«        »  ]\n\tPHP\t\t[«     »     ]\n\tPython\t\t[«       »   ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism";
 	}
 	function skillzCommand(args) {
-		return "\n‘« Ma $killz »’\nWhat I can programmerate:\n\tCizzle\t\t[«          »]\n\tCizzle++\t[«        »  ]\n\tObjectin-Cizzle\t[«          »]\n\t$wift\t\t[«       »   ]\n\tMakin a brew\t[«        »  ]\n\tHTMLFam\t\t[«      »    ]\n\tJavaScrizzle\t[«         » ]\n\tjQuerian\t[«        »  ]\n\tHIP\t\t[«     »     ]\n\tDa snake\t[«       »   ]\n\nNah:\n\tBrow liftin\n\tPie bakin\n\tExorcisin'\n\n";
+		return "\n‘« Ma $killz »’\nWhat I can programmerate:\n\tCizzle\t\t[«          »]\n\tCizzle++\t[«        »  ]\n\tObjectin-Cizzle\t[«          »]\n\t$wift\t\t[«       »   ]\n\tMakin a brew\t[«        »  ]\n\tHTMLFam\t\t[«      »    ]\n\tJavaScrizzle\t[«         » ]\n\tjQuerian\t[«        »  ]\n\tHIP\t\t[«     »     ]\n\tDa snake\t[«       »   ]\n\nNah:\n\tBrow liftin\n\tPie bakin\n\tExorcisin'";
 	}
 	function evaluate(str) {
 		var elem = $(".element");
@@ -123,19 +204,23 @@
 		} else if (cmd == "hello") {
 			result = "hey there!";
 		} else if (cmd == "contact") {
-			return contactCommand(args);
+			result = contactCommand(args);
+		} else if (cmd == "clear") {
+			result = clearCommand(args);
 		} else if (cmd == "stuff") {
-			return stuffCommand(args);
+			result = stuffCommand(args);
 		} else if (cmd == "skills") {
-			return skillsCommand(args);
+			result = skillsCommand(args);
 		} else if (cmd == "skillz") {
-			return skillzCommand(args);
+			result = skillzCommand(args);
+		} else if (cmd == "style") {
+			result = styleCommand(args);
 		} else if (cmd == "resume") {
-			return showResume();
+			result = showResume();
 		} else if (cmd == "cat") {
-			return catCommand(args);
+			result = catCommand(args);
 		} else if (cmd == "about") {
-			return aboutCommand(args);
+			result = aboutCommand(args);
 		} else if (cmd == "me") { 
 			result = "\n‘"+htmlImage()+"’";
 		} else {
@@ -147,7 +232,11 @@
 			}).fail (function() { result = 'command failed'; });*/
 			result = "-" + shortName + ": " + cmd + ": command not found";
 		}
-		return result;
+		if (result != 0) {
+			return result+"\n";
+		} else {
+			return '';
+		}
 	}
 	function mobileKeyboardHidden() {
 		$('#mobile_helper').fadeIn('fast');
@@ -156,7 +245,7 @@
 	function mobileShowKeyboard() {
 		$('#mobile_helper').fadeOut('fast');
 		$('#textinput').show();
-		$('#textinput').onblur = function() {mobileKeyboardHidden();};
+		$('#textinput').bind('blur', function(e){mobileKeyboardHidden();});
 		$('#textinput').focus();
 	}
 /*
@@ -222,11 +311,12 @@ $(function(){
 			window.scrollTo(0,document.body.scrollHeight);
 		} else {
 			if (document.body.scrollHeight > window.innerHeight) {
-				var elem = $(".element");
+				/*var elem = $(".element");
 				var tinput = $('#textinput');
 				//tinput.height(elem.height());
 				var newHeight = (tinput.height()+30)+"px";
-				tinput.css('line-height', newHeight);
+				tinput.css('line-height', newHeight);*/
+				window.scrollTo(0, document.body.scrollHeight);
 			} else {
 				window.scrollTo(0, 0);
 			}
@@ -245,18 +335,13 @@ $(function(){
 	
 	//var date = 'Last login: '+date('D M j H:i:s', time());
 	//$.cookie('lastdate', date, { expires: 10 });
-
+	setStyle('');
 	var finishedTyping = false;
 	var shifting = false;
-	var extra = '';
-	var beginning = '';
-	var thePrompt = '/var/root$ ';
-	var extraSize = 0;
-	var command = '';
 	//var timingOrExtra = beenHereBefore?('\n'+$.cookie('lastdate')):'^1000';
 	var timingOrExtra = beenHereBefore?'\nWelcome back!^500':'^1000';
 	//BenBrownCS.com
-	var toType = siteName+', version '+version+' initialized.'+timingOrExtra+'\n\n'+thePrompt;
+	var toType = siteName+', version '+version+' initialized.'+timingOrExtra+'\n\n'+prompt;
 	var cmds = [];
 	var historyCursor = -1;
 	var textCursor = 0;
@@ -268,7 +353,7 @@ $(function(){
 		startDelay: beenHereBefore?0:3000,
 		typeSpeed: -400,
 		showCursor: true,
-        cursorChar: "▋",
+        cursorChar: cursor,
 		contentType: 'text',
 		preStringTyped: function() {
 			$(".typed-cursor").css("color", "black");
@@ -285,7 +370,7 @@ $(function(){
 				}, 9000);
 		}
       });
-      
+
     function updateCursor() {
 		var cursor = $('.typed-cursor');
 		var amntLeft = -0.6*(extraSize-textCursor);
@@ -316,15 +401,18 @@ $(function(){
 					var myEval = evaluate(command);
 					beginning += myEval + "\n";
 					
-					if (command == "clear") {
+					/*if (command == "clear") {
 						beginning = '';
 						extra = '';
 						extraSize = 0;
-					}
+					}*/
 					
 					historyCursor = cmds.length;
+
+					var newHeight = $($('.container')[0]).height() - fontSize;
+					$('#textinput').position({top: newHeight+'px', left: '-15px'});
 				}
-				beginning += thePrompt;
+				beginning += prompt;
 				extra = '';
 				extraSize = 0;
 				textCursor = 0;
@@ -346,13 +434,12 @@ $(function(){
 				var second = text.indexOf("»");
 				var full = text.substring(first, second+1);
 				var inside = full.substring(1, full.length-1);
-				var replacement = "<span class='highlighted'>"+inside+"</span>";
-				//var replacement = "<span style='background-color: #28FE14; color: black;'>"+inside+"</span>";
+				var replacement = "<span class='highlighted' style='color: "+backgroundColor+"; background-color: "+textColor+";'>"+inside+"</span>";
 				text = text.replace(full, replacement);
 				beginning = text;
 				extra = '';
 			}
-			while (beginning.indexOf("‘") > -1) { // ‘TEXT TO CENTER‘
+			while (beginning.indexOf("‘") > -1) { // ‘TEXT TO CENTER’
 				var first = text.indexOf("‘");
 				var second = text.indexOf("’");
 				var full = text.substring(first, second+1);
@@ -493,13 +580,13 @@ body {
 
 .container {
 	overflow-wrap: break-word;
-	width: 80%;
+	width: 82%;
 	z-index:0;
 }
 
 .title_hero {
     color: #28FE14;
-    font-family:"Bitstream Vera Sans Mono", "Andale Mono", "Lucida Console", Monaco, monospace;
+    font-family:"Bitstream Vera Sans Mono", "Terminal", "Andale Mono", "Lucida Console", Monaco, monospace;
     /*font-size: 1em;*/
     font-size: 16px;
 }
@@ -540,20 +627,21 @@ body {
 	position: absolute;
 	opacity: 0;
 	width: 100%;
-	height: 100%;
+	height: 20px;
 	margin: 0 auto;
 	z-index: -99;
-	left: 0px;
+	left: -50px;
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
 	display: none;
 	font-size: 0px;
 	color: #000;
+	overflow: hidden;
 }
 
 #mobile_helper {
-	position:absolute;
+	position:fixed;
 	opacity: 0.4;
 	display: none;
 	left: 0px;
