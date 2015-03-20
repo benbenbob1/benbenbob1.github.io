@@ -21,6 +21,41 @@
 	var beginning = '';
 	var extraSize = 0;
 	var command = '';
+	var cmds = [];
+
+	var STR_PAD_LEFT = -1;
+	var STR_PAD_RIGHT = 1;
+	var STR_PAD_BOTH = 0;
+	function pad(str, len, pad, dir) {
+	    if (typeof(len) == "undefined") { var len = 0; }
+	    if (typeof(pad) == "undefined") { var pad = ' '; }
+	    if (typeof(dir) == "undefined") { var dir = STR_PAD_RIGHT; }
+
+	    if (len + 1 >= str.length) {
+
+	        switch (dir){
+
+	            case STR_PAD_LEFT:
+	                str = Array(len + 1 - str.length).join(pad) + str;
+	            break;
+
+	            case STR_PAD_BOTH:
+	                var right = Math.ceil((padlen = len - str.length) / 2);
+	                var left = padlen - right;
+	                str = Array(left+1).join(pad) + str + Array(right+1).join(pad);
+	            break;
+
+	            default:
+	                str = str + Array(len + 1 - str.length).join(pad);
+	            break;
+
+	        } // switch
+
+	    }
+
+	    return str;
+
+	}
 
 	/*
 	 * Colors: 
@@ -40,7 +75,7 @@
 	
 	//TO DO: colors
 	function setStyle(style) {
-		if (!style || style.legth == 0) {var style = "terminal";}
+		//if (!style || style.legth == 0) {}
 		var isDefault = style == "terminal";
 		if (style == "terminal") {
 			textColor = '#28FE14';
@@ -56,8 +91,6 @@
 			prompt = 'C:\\>';
 			cursor = '͟';
 			fontSize = '16px';
-		} else {
-			return setStyle("");
 		}
 
 		document.getElementsByTagName("html")[0].style.backgroundColor = backgroundColor;
@@ -168,6 +201,25 @@
 		extraSize = 0;
 		return 'Screen cleared.';
 	}
+	/*function colorCommand(args) {
+		if (args.length != 2 || args[1] == '' || args[1].length != 2) {
+			return 'usage: color <background><foreground>\n\twhere each color is a hex digit:\n\t\t0 = Black\n\t\t1 = Blue\n\t\t9 = Light Blue\n\t\t2 = Green\n\t\tA = Light Green\n\t\t3 = Aqua\n\t\tB = Light Aqua\n\t\t4 = Red\n\t\tC = Light Red\n\t\t5 = Purple\n\t\tD = Light Purple\n\t\t6 = Yellow\n\t\tE = Light Yellow\n\t\t7 = White\n\t\tF = Bright White';
+		}
+		var colors = args[1].split("");
+		var c1 = colors[0];
+		var c2 = colors[1];
+		
+	}*/
+	function historyCommand(args) {
+		var allHistory = "";
+		for (var i=0; i<cmds.length; i++) {
+			var numStr = ""+(i+1);
+			numStr = pad(numStr, 7, ' ', 0);
+			var shouldNewline = (i == cmds.length-1 ? "":"\n");
+			allHistory = allHistory + numStr + cmds[i] + shouldNewline;
+		}
+		return allHistory;
+	}
 	function styleCommand(args) {
 		if (args.length != 2 || args[1] == '') {
 			return 'usage: style colorscheme\n\twhere colorscheme is one of:\n\t\tterminal\n\t\tmsdos';
@@ -200,7 +252,7 @@
 		} else if (cmd == "ls") {
 			result = '/\tme.txt\tindex.html\ntyped.js\tjquery.cookie.js';
 		} else if (cmd == "help") {
-			result = "\nabout: all about me, Ben Brown!\nskills: what can I do for you?\nstuff: some things I've done\ncontact: how to find me\n\nSome commands:\n\techo\tcat\tls\nMore commands to come!";
+			result = "\nabout: all about me, Ben Brown!\nskills: what can I do for you?\nstuff: some things I've done\ncontact: how to find me\n\nSome commands:\n\techo\tcat\tls\n\thistory\nMore commands to come!";
 		} else if (cmd == "hello") {
 			result = "hey there!";
 		} else if (cmd == "contact") {
@@ -219,7 +271,11 @@
 			result = showResume();
 		} else if (cmd == "cat") {
 			result = catCommand(args);
-		} else if (cmd == "about") {
+		//} else if (cmd == "color") {
+		//	result = colorCommand(args);
+		} else if (cmd == "history") {
+			result = historyCommand(args);
+		}  else if (cmd == "about") {
 			result = aboutCommand(args);
 		} else if (cmd == "me") { 
 			result = "\n‘"+htmlImage()+"’";
@@ -335,14 +391,13 @@ $(function(){
 	
 	//var date = 'Last login: '+date('D M j H:i:s', time());
 	//$.cookie('lastdate', date, { expires: 10 });
-	setStyle('');
+	setStyle('terminal');
 	var finishedTyping = false;
 	var shifting = false;
 	//var timingOrExtra = beenHereBefore?('\n'+$.cookie('lastdate')):'^1000';
 	var timingOrExtra = beenHereBefore?'\nWelcome back!^500':'^1000';
 	//BenBrownCS.com
 	var toType = siteName+', version '+version+' initialized.'+timingOrExtra+'\n\n'+prompt;
-	var cmds = [];
 	var historyCursor = -1;
 	var textCursor = 0;
 	var showingSocial = false;
@@ -550,8 +605,6 @@ $(function(){
 	});
 	
 	$(document).on('keyup keydown', function(e){shifting = e.shiftKey} );
-	
-	
 });
 </script>
 <script>
@@ -586,7 +639,7 @@ body {
 
 .title_hero {
     color: #28FE14;
-    font-family:"Bitstream Vera Sans Mono", "Terminal", "Andale Mono", "Lucida Console", Monaco, monospace;
+    font-family:"Bitstream Vera Sans Mono", "Lucida Console", "Andale Mono", "Lucida Console", Monaco, monospace;
     /*font-size: 1em;*/
     font-size: 16px;
 }
