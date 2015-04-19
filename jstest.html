@@ -1,0 +1,31 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+function butClick() {
+	alert("Click");
+	postJSONData("", "local")
+}
+function postJSONData(JSONData, localMode) {
+    var localJSONData = JSONData;
+    var postMode = localMode;
+
+     $.ajax({
+            type: 'POST',
+            url: 'localhost:8000',
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data:  JSONData,
+            success: function(data){
+                alert("SECOND POST JSON DATA");
+            }   // Success Function
+	}); // AJAX Call
+
+    alert("POST JSON ------------> "+localJSONData +" "+postMode);
+}
+</script>
+</head>
+<body>
+<button onclick="butClick()">Test me</button>
+</body>
+</html>
