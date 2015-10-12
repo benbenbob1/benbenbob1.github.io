@@ -15,10 +15,38 @@ $(function() {
 		var STR_PAD_RIGHT = 1;
 		var STR_PAD_BOTH = 0;
 
+		//Map of commands to their function
+		//function looks like name_of_function(args)
+		var commands = {
+			'about' 	: 'aboutCommand' 	,
+			'cat'		: 'catCommand' 		,
+			'clear'  	: 'clearCommand' 	,
+			'contact'	: 'contactCommand' 	,
+			'echo'		: 'echoCommand' 	,
+			'hello'  	: 'helloCommand' 	,
+			'help'		: 'helpCommand' 	,
+			'history' 	: 'historyCommand' 	,
+			'ls'	  	: 'lsCommand'  		,
+			'me'		: 'meCommand' 		,
+			'resume' 	: 'resumeCommand'  	,
+			'skills' 	: 'skillsCommand' 	,
+			'skillz'	: 'skillzCommand' 	, //ignore 
+			'stuff'  	: 'stuffCommand' 	,
+			'style'  	: 'styleCommand' 	, //ignore
+			'test'		: 'testCommand' 	,
+		};
+
+		//List of commands to be ignored by tab completion
+		var ignoreList = [
+			'skillz',
+			'style'
+		];
+
 		var _cmdList = {
 			aboutCommand: function(args) {
 				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend designer.\n\nI am looking for a Summer 2016 internship!";
 			},
+			//Will not work locally
 			catCommand: function(args) {
 				if (args.length < 2 || args[1] == ' ' || args[1] == '') {
 					return 'usage: cat file1\n\tprints the contents of <u>file1</u>.';
@@ -96,10 +124,20 @@ $(function() {
 				return allHistory;
 			},
 			lsCommand: function(args) {
-				return '/\tme.txt\tindex.html\ntyped.js\tjquery.cookie.js';
+				for (arg in args) {
+					if (args[arg].substring(0, 2) === './')
+						args[arg] = args[arg].substring(2);
+				}
+				if (args[1] == 'js') {
+					return 'main.js\ttyped.js';
+				} else if (args.length > 1) {
+					return 'ls: '+args[1]+': No such file or directory';
+				}
+				return 'index.html\tskillstext.txt\tstyle.css\tjs'+
+				'\nme.txt\t\tstuff.txt';
 			},
 
-			//TODO: fix me
+			//Will not work locally
 			meCommand: function(args) {
 				return "\n‘"+htmlImage()+"’";
 			},
@@ -127,25 +165,6 @@ $(function() {
 			testCommand: function(args) {
 				return "success!";
 			}
-		};
-
-		var commands = {
-			'test'		: 'testCommand' 	,
-			'echo'		: 'echoCommand' 	,
-			'ls'	  	: 'lsCommand'  		,
-			'help'		: 'helpCommand' 	,
-			'hello'  	: 'helloCommand' 	,
-			'contact'	: 'contactCommand' 	,
-			'clear'  	: 'clearCommand' 	,
-			'stuff'  	: 'stuffCommand' 	,
-			'skills' 	: 'skillsCommand' 	,
-			'skillz'	: 'skillzCommand' 	,
-			/*'style'  	: 'styleCommand' 	,*/
-			'resume' 	: 'resumeCommand'  	,
-			'cat'		: 'catCommand' 		,
-			'history' 	: 'historyCommand' 	,
-			'about' 	: 'aboutCommand' 	,
-			'me'		: 'meCommand' 		,
 		};
 
 		function pad(str, len, pad, dir) {
@@ -273,10 +292,16 @@ $(function() {
 			return out;
 		}
 
-		function displayHtml() {
+		function displayHtml(html) {
+			extra += html
+			extraSize += html.length;
+			textCursor += html.length;
 
+			elem.html(beginning + extra);
+			updateCursor();
 		}
 
+		//TODO: create error function
 		function evaluate(str) {
 			var elem = $(".element");
 			var args = str.toString().split(' ');
@@ -291,8 +316,8 @@ $(function() {
 							gotCommand = commands[cmd];
 							if (gotCommand) {
 								theCommand = _cmdList[gotCommand](args);
-								console.log(theCommand);
 								if (theCommand === null) {
+									//
 									result = "-" + shortName + ": " + cmd + ": command not found";
 								} else {
 									result = theCommand
@@ -301,7 +326,6 @@ $(function() {
 						}
 					}
 				} finally {
-					console.log("gC: ", gotCommand);
 					if (gotCommand === -1) {
 						/*var header = "?cmd="+encodeURIComponent(str);
 						result = $.ajaxSetup({async: false, timeout: 4000});
@@ -320,6 +344,7 @@ $(function() {
 				}
 			}
 		}
+
 		function mobileKeyboardHidden() {
 			$('#mobile_helper').fadeIn('fast');
 			$('#textinput').hide();
@@ -467,6 +492,9 @@ $(function() {
 			var len = text.length;
 			var set = false;
 			for (cmd in commands) {
+				if (ignoreList.indexOf(cmd) != -1) {
+					continue;
+				}
 				if (text === cmd.substring(0, len) && commands[cmd]) {
 					if (set == true) {
 						suggest = '';
@@ -476,12 +504,7 @@ $(function() {
 					set = true;
 				}
 			}
-			extra += suggest
-			extraSize += suggest.length;
-			textCursor += suggest.length;
-
-			elem.html(beginning + extra);
-			updateCursor();
+			displayHtml(suggest);
 		}
 
 
@@ -490,6 +513,12 @@ $(function() {
 				var key = e.keyCode;
 				if (key <= 0) { key = e.charCode; }
 			var typedStr = String.fromCharCode(key);
+
+			//TODO: replace > with &gt;
+			//https://jsfiddle.net/3e8tkLjo/
+
+			//typedStr = typedStr.replace(/\>/g,'&gt;').replace(/\</g, '&lt;');
+
 			//if (shifting) {
 			//	typedStr = typedStr.toUpperCase();
 			//}
