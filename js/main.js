@@ -1,7 +1,7 @@
 $(function() {
 		var siteName = "benbrown.science";
 		var shortName = "bbs";
-		var version = 0.85;
+		var version = 0.86;
 
 		var textColor, backgroundColor, linkColor, prompt, cursor, fontSize;
 
@@ -55,10 +55,24 @@ $(function() {
 					return 'why don\'t you just view the source?';
 				}
 				var out = '';
-				$.ajaxSetup({async: false, timeout: 5000});
+				//$.ajaxSetup({async: false, timeout: 3000});
+				var ajax = $.ajax({
+					url: args[1],
+					success: function(data) {
+						console.log("S:", data);
+						out = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+					},
+					error: function(error) {
+						console.log(error);
+						out = 'read failed. '+error.statusText;
+					},
+					timeout: 3000,
+					async: false
+				});
+				/*
 				var jqxhr = $.get( args[1], function( data ) {
 					out = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-				}).fail (function() { out = 'read failed'; });
+				}).fail (function() { out = 'read failed'; });*/
 				return out;
 			},
 			clearCommand: function(args) {
@@ -76,7 +90,7 @@ $(function() {
 					result = 'Opening twitter...';
 					$('#twitter-button').click();
 				} else if (args[1] === "-r") {
-					result = showResume();
+					result = resumeCommand();
 				} else if (args[1] === "-l") {
 					result = 'Opening LinkedIn...';
 					$('#in-button').click();
@@ -142,7 +156,7 @@ $(function() {
 				return "\n‘"+htmlImage()+"’";
 			},
 			resumeCommand: function(args) {
-				window.open("https://www.dropbox.com/s/3i0e8vu47lj7ehk/Ben%20Brown%20-%20Resume.pdf?dl=0");
+				window.open("https://docsend.com/view/pebk2a5");
 				return "Opening resume...";
 			},
 			styleCommand: function(args) {
