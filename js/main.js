@@ -1,7 +1,7 @@
 $(function() {
 		var siteName = "benbrown.science";
 		var shortName = "bbs";
-		var version = 0.86;
+		var version = 0.87;
 
 		var textColor, backgroundColor, linkColor, prompt, cursor, fontSize;
 
@@ -10,6 +10,8 @@ $(function() {
 		var extraSize = 0;
 		var command = '';
 		var cmds = [];
+
+		var tabPressed = false;
 
 		var STR_PAD_LEFT = -1;
 		var STR_PAD_RIGHT = 1;
@@ -38,8 +40,7 @@ $(function() {
 
 		//List of commands to be ignored by tab completion
 		var ignoreList = [
-			'skillz',
-			'style'
+			'skillz'
 		];
 
 		var _cmdList = {
@@ -125,7 +126,7 @@ $(function() {
 				return "hey there!";
 			},
 			helpCommand: function(args) {
-				return "\nabout: all about me, Ben Brown!\nskills: what can I do for you?\nstuff: some things I've done\ncontact: how to find me\n\nSome commands:\n\techo\tcat\tls\n\thistory\nMore commands to come!";
+				return "\nabout: all about me, Ben Brown!\nskills: what can I do for you?\nstuff: some things I've done\ncontact: how to find me\n\nSome commands:\n\techo\tcat\tls\tstyle\n\thistory\nMore commands to come!";
 			},
 			historyCommand: function(args) {
 				var allHistory = "";
@@ -163,9 +164,7 @@ $(function() {
 				if (args.length != 2 || args[1] == '') {
 					return 'usage: style colorscheme\n\twhere colorscheme is one of:\n\t\tterminal\n\t\tmsdos';
 				}
-				var result = setStyle(args[1]);
-				clearCommand('');
-				return result;
+				return setStyle(args[1]);
 			}, 
 			stuffCommand: function(args) {
 				return "\n‘« Stuff »’\nSome things I've done:\n • Created a Bluetooth audio receiver using a Raspberry Pi, C, and a few shell scripts\n • Created a webserver and associated iPhone app to control the led light strips in my room using a custom circuit, said Raspberry Pi, C, and Objective-C\n • Wrote a program that takes the music I'm listening to and makes the lights respond to the music using C\n • Wrote this website in JavaScript :)";
@@ -246,7 +245,12 @@ $(function() {
 				prompt = 'C:\\>';
 				cursor = '͟';
 				fontSize = '16px';
+			} else {
+				return 'Unknown style ' + style;
 			}
+
+			//TODO
+			//localStorage.setItem('style', style);
 
 			document.getElementsByTagName("html")[0].style.backgroundColor = backgroundColor;
 			
@@ -274,9 +278,13 @@ $(function() {
 					console.log(links[i].children);
 				}*/
 			}
+
+			_cmdList[commands['clear']]('');
+
 			var str = "Style changed to "+style;
 			if (isDefault) { str += " (default)"; }
 			str += ".";
+
 			return str;
 		}
 
@@ -452,9 +460,13 @@ $(function() {
 			localStorage.setItem('visited', 'true', { expires: 10 });
 		}
 
-		//var date = 'Last login: '+date('D M j H:i:s', time());
-		//$.cookie('lastdate', date, { expires: 10 });
-		setStyle('terminal');
+		//var style = localStorage.getItem('style');
+		/*if (style) {
+			setStyle(style);
+		} else {*/
+			setStyle('terminal');
+		//}
+		
 		var finishedTyping = false;
 		var shifting = false;
 		//var timingOrExtra = beenHereBefore?('\n'+$.cookie('lastdate')):'^1000';
@@ -501,6 +513,29 @@ $(function() {
 			cursor.css('-moz-transform', str);
 		}
 
+		/*
+		TODO
+		function getAllSuggestions(text) {
+			console.log("getting suggestions for "+text);
+			var len = text.length;
+			var suggestionStr = "\n";
+			var foundOne = false;
+			for (cmd in commands) {
+				if (ignoreList.indexOf(cmd) != -1) {
+					continue;
+				}
+				if (text === cmd.substring(0, len) && commands[cmd]) {
+					suggestionStr += cmd + "\t";
+					foundOne = true;
+				}
+			}
+			if (foundOne == false) {
+				return;
+			}
+			extra = text;
+			displayHtml(suggestionStr+"\n"+prompt+text);
+		}*/
+
 		function getSuggestion(text) {
 			var suggest = '';
 			var len = text.length;
@@ -520,7 +555,6 @@ $(function() {
 			}
 			displayHtml(suggest);
 		}
-
 
 		$(document).keypress(function(e) {
 			if (finishedTyping) {
@@ -623,6 +657,9 @@ $(function() {
 
 		$(document).keydown(function(e){
 			if (finishedTyping) {
+				if (e.keyCode != 9) {
+					tabPressed = false;
+				}
 				var elem = $(".element");
 				var typedStr = String.fromCharCode(e.keyCode);
 				if (!shifting) {
@@ -641,7 +678,12 @@ $(function() {
 						textCursor --;
 					}
 				} else if (e.keyCode == 9) { //tab
-					getSuggestion(extra);
+					/*if (tabPressed) {
+						getAllSuggestions(extra);
+					} else {*/
+						getSuggestion(extra);
+					//	tabPressed = true;
+					//}
 				} else if (e.keyCode == 38 || e.keyCode == 40) {
 					if (e.keyCode == 38) { //up arrow
 						localStorage.last = extra;
