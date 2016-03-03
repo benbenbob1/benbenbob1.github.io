@@ -5,14 +5,11 @@ What I can do:
 	Java		[--------  ] 8
 	HTML5		[------    ] 6
 	Javascript	[--------- ] 9
-	jQuery		[--------  ] 8
 	PHP			[-----     ] 5
 	Python		[-------   ] 7
 
-What I cannot do:
-	Raise one eyebrow
-	Bake a rhubarb pie
-	Perform an exorcism
+Keywords:
+	Node, Handlebars, Gulp, Grunt, Bootstrap, Bower, Django
 
 \n<center>« My Skills »</center>\nWhat I can do:\n\tC\t\t[«          »]\n\tC++\t\t[«        »  ]\n\tObjective-C\t[«          »]\n\tJava\t\t[«        »  ]\n\tHTML5\t\t[«      »    ]\n\tJavaScript\t[«         » ]\n\tjQuery\t\t[«        »  ]\n\tPHP\t\t[«     »     ]\n\tPython\t\t[«       »   ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism\n\n
 
