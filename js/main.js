@@ -302,8 +302,7 @@ $(function() {
 		}
 		function showSidebar() {
 			$('#cmdList').show('slide', {direction: 'right'}, 500);
-			$('#contactmenu_container').fadeIn(500);
-			setTimeout(function(){ $(window).resize(); }, 505);
+			$('#contactmenu_container').fadeIn(500, function(){resizeContainerForSidebar();});
 		}
 		function htmlImage() {
 			var out = '';
@@ -428,10 +427,15 @@ $(function() {
 		    $('.typed-cursor').attr('id', 'unfocused');
 		});
 
-		$(window).resize(function() {
+		function resizeContainerForSidebar() {
 			if ($('#cmdList').position().left > 100) {
+				console.log("Readjusting!");
 		    	$('.container').css('width',  ($('#cmdList').position().left-15)+'px');
 		    }
+		}
+
+		$(window).resize(function() {
+			resizeContainerForSidebar();
 		});
 
 		function scrollToBottom() {
@@ -455,10 +459,12 @@ $(function() {
 		if( document[hidden] !== undefined )
 		onchange({type: document[hidden] ? "blur" : "focus"});
 
-		var beenHereBefore = localStorage.getItem('visited');
-		if (!beenHereBefore) {
-			localStorage.setItem('visited', 'true', { expires: 10 });
-		}
+		try {
+			var beenHereBefore = localStorage.getItem('visited');
+			if (!beenHereBefore) {
+				localStorage.setItem('visited', 'true', { expires: 10 });
+			}
+		} catch (e) {}
 
 		//var style = localStorage.getItem('style');
 		/*if (style) {
@@ -489,15 +495,15 @@ $(function() {
 			preStringTyped: function() {
 				$(".typed-cursor").css("color", "black");
 				finishedTyping = false;
-				},
+			},
 			callback: function() {
 				$(".typed-cursor").css("color", "");
 				finishedTyping = true;
 				beginning = $(".element").text();
 				if (beenHereBefore) { showSidebar(); showingSocial = true; }
-				setTimeout(function(){ $(window).resize(); }, 500);
-				setTimeout(function(){
-					if (!showingSocial) { showSidebar(); showingSocial = true; }
+				else 
+					setTimeout(function(){
+						if (!showingSocial) { showSidebar(); showingSocial = true; }
 					}, 9000);
 			}
 		  });
