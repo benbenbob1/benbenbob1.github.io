@@ -45,7 +45,7 @@ $(function() {
 
 		var _cmdList = {
 			aboutCommand: function(args) {
-				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend designer.\n\nI am looking for a Summer 2017 internship or co-op!";
+				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend engineer.\n\nI am looking for a Summer 2017 internship or co-op!";
 			},
 			//Will not work locally
 			catCommand: function(args) {
