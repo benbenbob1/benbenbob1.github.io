@@ -60,11 +60,9 @@ $(function() {
 				var ajax = $.ajax({
 					url: args[1],
 					success: function(data) {
-						console.log("S:", data);
 						out = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 					},
 					error: function(error) {
-						console.log(error);
 						out = 'read failed. '+error.statusText;
 					},
 					timeout: 3000,
@@ -429,7 +427,6 @@ $(function() {
 
 		function resizeContainerForSidebar() {
 			if ($('#cmdList').position().left > 100) {
-				console.log("Readjusting!");
 		    	$('.container').css('width',  ($('#cmdList').position().left-15)+'px');
 		    }
 		}
