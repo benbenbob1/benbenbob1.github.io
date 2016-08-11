@@ -3,6 +3,13 @@ $(function() {
 		var shortName = "bbs";
 		var version = 0.87;
 
+		/*																*
+		 *		Feel free to look around!								*
+		 *																*
+		 *						benbrown52@gmail.com					*
+		 *																*
+		 *																*/
+
 		var textColor, backgroundColor, linkColor, prompt, cursor, fontSize;
 
 		var extra = '';
@@ -18,7 +25,7 @@ $(function() {
 		var STR_PAD_BOTH = 0;
 
 		//Map of commands to their function
-		//function looks like name_of_function(args)
+		//function looks like nameOfFunction(args)
 		var commands = {
 			'about' 	: 'aboutCommand' 	,
 			'cat'		: 'catCommand' 		,
@@ -34,7 +41,7 @@ $(function() {
 			'skills' 	: 'skillsCommand' 	,
 			'skillz'	: 'skillzCommand' 	, //ignore 
 			'stuff'  	: 'stuffCommand' 	,
-			'style'  	: 'styleCommand' 	, //ignore
+			'style'  	: 'styleCommand' 	,
 			'test'		: 'testCommand' 	,
 		};
 
@@ -179,9 +186,9 @@ $(function() {
 		};
 
 		function pad(str, len, pad, dir) {
-		    if (typeof(len) == "undefined") { var len = 0; }
-		    if (typeof(pad) == "undefined") { var pad = ' '; }
-		    if (typeof(dir) == "undefined") { var dir = STR_PAD_RIGHT; }
+		    if (typeof(len) === undefined) { var len = 0; }
+		    if (typeof(pad) === undefined) { var pad = ' '; }
+		    if (typeof(dir) === undefined) { var dir = STR_PAD_RIGHT; }
 
 		    if (len + 1 >= str.length) {
 
@@ -288,7 +295,7 @@ $(function() {
 
 		var fbLink = "https://www.facebook.com/benbenbobsoftware";
 		var twitterLink = "http://www.twitter.com/benbenbobsoft";
-		var liLink = "https://www.linkedin.com/profile/view?id=327054241";
+		var liLink = "https://www.linkedin.com/in/benebrown";
 		var mailLink = "mailto:benbrown52@gmail.com";
 		var ghLink = "http://www.github.com/benbenbob1";
 		function setupLinks() {
