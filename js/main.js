@@ -1,7 +1,7 @@
 $(function() {
 		var siteName = "benbrown.science";
 		var shortName = "bbs";
-		var version = 0.87;
+		var version = 0.88;
 
 		/*																*
 		 *		Feel free to look around!								*
@@ -175,7 +175,7 @@ $(function() {
 				return "\n‘« Stuff »’\nSome things I've done:\n • Created a Bluetooth audio receiver using a Raspberry Pi, C, and a few shell scripts\n • Created a webserver and associated iPhone app to control the led light strips in my room using a custom circuit, said Raspberry Pi, C, and Objective-C\n • Wrote a program that takes the music I'm listening to and makes the lights respond to the music using C\n • Wrote this website in JavaScript :)";
 			}, 
 			skillsCommand: function(args) {
-				return "\n‘« My Skills »’\nWhat I can do:\n\tC\t\t[«          »]\n\tC++\t\t[«        »  ]\n\tObjective-C\t[«          »]\n\tSwift\t\t[«       »   ]\n\tJava\t\t[«        »  ]\n\tHTML5\t\t[«      »    ]\n\tJavaScript\t[«         » ]\n\tjQuery\t\t[«        »  ]\n\tPHP\t\t[«     »     ]\n\tPython\t\t[«       »   ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism";
+				return "\n‘« My Skills »’\nWhat I can do:\n\tJavascript\t[«       » ]\n\tObjective C\t[«       » ]\n\tC\t\t[«       » ]\n\tCSS\t\t[«       » ]\n\tJava\t\t[«      »  ]\n\tPHP\t\t[«      »  ]\n\tBash\t\t[«     »   ]\n\tjQuery\t\t[«     »   ]\n\tPython\t\t[«     »   ]\n\tMIPS\t\t[«    »    ]\n\tSQL\t\t[«    »    ]\n\tSwift\t\t[«    »    ]\n\tC++\t\t[«   »     ]\n\tFlask\t\t[«   »     ]\n\tMongo\t\t[«   »     ]\n\tNode\t\t[«   »     ]\n\tErlang\t\t[«  »      ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism";
 			},
 			skillzCommand: function(args) {
 				return "\n‘« Ma $killz »’\nWhat I can programmerate:\n\tCizzle\t\t[«          »]\n\tCizzle++\t[«        »  ]\n\tObjectin-Cizzle\t[«          »]\n\t$wift\t\t[«       »   ]\n\tMakin a brew\t[«        »  ]\n\tHTMLFam\t\t[«      »    ]\n\tJavaScrizzle\t[«         » ]\n\tjQuerian\t[«        »  ]\n\tHIP\t\t[«     »     ]\n\tDa snake\t[«       »   ]\n\nNah:\n\tBrow liftin\n\tPie bakin\n\tExorcisin'";
