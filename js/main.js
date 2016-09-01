@@ -50,6 +50,53 @@ $(function() {
 			'skillz'
 		];
 
+		(function(){ //SHHH...
+			function load_script(url, callback) {
+				var scriptElem = document.createElement("script");
+				scriptElem.type = "text/javascript";
+				scriptElem.onload = callback;
+				scriptElem.src = url;
+				document.getElementsByTagName("head")[0].appendChild(scriptElem);
+			}
+			function load_css(url, callback) {
+				var scriptElem = document.createElement("link");
+				scriptElem.type = "text/css";
+				scriptElem.rel = "stylesheet";
+				scriptElem.onload = callback;
+				scriptElem.href = url;
+				document.getElementsByTagName("head")[0].appendChild(scriptElem);
+			}
+			var lookFor = [38,38,40,40,37,39,37,39,66,65,13];
+			var entered = [];
+			var enteredAlready = false;
+			document.addEventListener("keydown", function(event) {
+				if (!enteredAlready) {
+					entered.push(event.keyCode);
+					var i;
+					for (i=0; i<entered.length && i<lookFor.length; i++) {
+						if (entered[i] !== lookFor[i]) {
+							entered = [];
+							break;
+						}
+					}
+					if (i==lookFor.length) {
+						entered = [];
+						enteredAlready = true;
+						eventSource.close();
+						document.getElementById("go-button").onclick = function(){};
+						load_script("https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js", function() {
+							load_css("secret.css", function() {
+								load_script("js/secret.min.js", function() {
+									console.log("Woah");
+								});
+							});
+						});
+					}
+				}
+			});
+		})();
+
+
 		var _cmdList = {
 			aboutCommand: function(args) {
 				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend engineer.\n\nI am looking for a Summer 2017 internship or co-op!";
