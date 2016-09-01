@@ -82,8 +82,6 @@ $(function() {
 					if (i==lookFor.length) {
 						entered = [];
 						enteredAlready = true;
-						eventSource.close();
-						document.getElementById("go-button").onclick = function(){};
 						load_script("https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js", function() {
 							load_css("secret.css", function() {
 								load_script("js/secret.min.js", function() {
