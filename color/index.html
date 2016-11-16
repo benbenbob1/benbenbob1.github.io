@@ -62,11 +62,11 @@ iframe {
                     scr = scripts[i]
                     if (scr.src) {
                         if (scr.src[0] == "/") {
-                            scr.setAttribute("src", src + scr.src)
+                            scr.setAttribute("src", src + scr.getAttribute("src"))
                         }
                     } else if (scr.href) {
                         if (scr.href[0] == "/") {
-                            scr.setAttribute("href", src + scr.href)
+                            scr.setAttribute("href", src + scr.getAttribute("href"))
                         }
                     }
                     scr.parentElement.removeChild(scr)
