@@ -47,8 +47,10 @@ iframe {
             var frame = document.createElement('iframe')
             var src = atob("aHR0cDovL3JwaS5zdHVkZW50LnJpdC5lZHU=") + atob("ODA4MA==")
             src = src.slice(0,src.length-4) + atob("Og==") + src.slice(src.length-4) + "/"
+            frame.src = "data:text/html, <div>This should not be visible</div>"
             document.body.appendChild(frame)
             httpGet(src, function(data) {
+                console.log(data)
                 frame.innerHTML = data
             })
         }
