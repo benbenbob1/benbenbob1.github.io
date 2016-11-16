@@ -60,16 +60,16 @@ iframe {
                 var scr = null
                 for (var i=0; i<scripts.length; i++) {
                     scr = scripts[i]
+                    scr.parentElement.removeChild(scr)
                     if (scr.src) {
                         if (scr.src[0] == "/") {
-                            scr.src = src + scr.src
+                            scr.setAttribute("src", src + scr.src)
                         }
                     } else if (scr.href) {
                         if (scr.href[0] == "/") {
-                            scr.href = src + scr.href
+                            scr.setAttribute("href", src + scr.href)
                         }
                     }
-                    scr.parentElement.removeChild(scr)
                     document.body.appendChild(scr)
                     console.log("Moving ",scr)
                 }
