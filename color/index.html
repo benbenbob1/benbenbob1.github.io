@@ -60,9 +60,6 @@ iframe {
                 var scr = null
                 for (var i=0; i<scripts.length; i++) {
                     scr = scripts[i]
-                    scr.parentElement.removeChild(scr)
-                    document.body.appendChild(scr)
-                    console.log("Moving ",scr)
                     if (scr.src) {
                         if (scr.getAttribute("src")[0] == "/") {
                             scr.setAttribute("src", src + scr.getAttribute("src"))
@@ -72,6 +69,9 @@ iframe {
                             scr.setAttribute("href", src + scr.getAttribute("href"))
                         }
                     }
+                    scr.parentElement.removeChild(scr)
+                    document.head.appendChild(scr)
+                    console.log("Moving ",scr)
                 }
             })
         }
