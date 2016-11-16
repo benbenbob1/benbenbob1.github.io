@@ -70,7 +70,7 @@ iframe {
                         }
                     }
                     scr.parentElement.removeChild(scr)
-                    document.body.appendChild(scr)
+                    document.write(scr.innerHTML)
                     console.log("Moving ",scr)
                 }
             })
