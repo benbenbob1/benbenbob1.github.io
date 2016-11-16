@@ -64,11 +64,11 @@ iframe {
                     document.body.appendChild(scr)
                     console.log("Moving ",scr)
                     if (scr.src) {
-                        if (scr.src[0] == "/") {
+                        if (scr.getAttribute("src")[0] == "/") {
                             scr.setAttribute("src", src + scr.getAttribute("src"))
                         }
                     } else if (scr.href) {
-                        if (scr.href[0] == "/") {
+                        if (scr.getAttribute("href")[0] == "/") {
                             scr.setAttribute("href", src + scr.getAttribute("href"))
                         }
                     }
