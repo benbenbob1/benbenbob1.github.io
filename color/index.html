@@ -52,7 +52,7 @@ iframe {
             httpGet(src, function(data) {
                 var docFrag = document.createDocumentFragment()
                 docFrag.innerHTML = data
-                var scripts = docFrag.getElementsByTagName("script")
+                var scripts = docFrag.querySelectorAll("script")
                 var scr = null
                 for (var i=0; i<scripts.length; i++) {
                     scr = scripts[i]
