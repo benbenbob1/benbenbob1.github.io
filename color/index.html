@@ -60,8 +60,14 @@ iframe {
                 var scr = null
                 for (var i=0; i<scripts.length; i++) {
                     scr = scripts[i]
-                    if (scr.src[0] == "/") {
-                        scr.src = src + scr.src
+                    if (scr.src) {
+                        if (scr.src[0] == "/") {
+                            scr.src = src + scr.src
+                        }
+                    } else if (scr.href) {
+                        if (scr.href[0] == "/") {
+                            scr.href = src + scr.href
+                        }
                     }
                     scr.parentElement.removeChild(scr)
                     document.body.appendChild(scr)
