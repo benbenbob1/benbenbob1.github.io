@@ -21,11 +21,9 @@ iframe {
         function httpGet(theUrl, callback) {
             if (window.XMLHttpRequest) {
                 xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        callback(xmlhttp.responseText);
-                    }
-                }
+                xmlhttp.addEventListener("load", function() {
+                    callback(xmlhttp.responseText);
+                });
                 xmlhttp.open("GET", theUrl);
                 xmlhttp.send();
             }
