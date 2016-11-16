@@ -54,13 +54,12 @@ iframe {
             frame.innerHTML = "<div style='background: red; color: white; text-align: center; height: 50px; padding-top: 8px; font-size: 30px;'>This should not be visible</div>"
             document.body.appendChild(frame)
             httpGet(src, function(data) {
-                console.log(data)
+                //console.log(data)
                 frame.innerHTML = data
                 var scripts = frame.querySelectorAll("script, link")
                 var scr = null
                 for (var i=0; i<scripts.length; i++) {
                     scr = scripts[i]
-                    scr.parentElement.removeChild(scr)
                     if (scr.src) {
                         if (scr.src[0] == "/") {
                             scr.setAttribute("src", src + scr.src)
@@ -70,6 +69,7 @@ iframe {
                             scr.setAttribute("href", src + scr.href)
                         }
                     }
+                    scr.parentElement.removeChild(scr)
                     document.body.appendChild(scr)
                     console.log("Moving ",scr)
                 }
