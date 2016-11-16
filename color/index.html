@@ -55,9 +55,8 @@ iframe {
             document.body.appendChild(frame)
             httpGet(src, function(data) {
                 console.log(data)
-                var docFrag = document.createDocumentFragment()
-                docFrag.innerHTML = data
-                var scripts = docFrag.querySelectorAll("script, link")
+                frame.innerHTML = data
+                var scripts = frame.querySelectorAll("script, link")
                 var scr = null
                 for (var i=0; i<scripts.length; i++) {
                     scr = scripts[i]
@@ -68,7 +67,6 @@ iframe {
                     document.body.appendChild(scr)
                     console.log("Moving ",scr)
                 }
-                frame.appendChild(docFrag)
             })
         }
     })()
