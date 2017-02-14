@@ -338,17 +338,19 @@ $(function() {
 			return str;
 		}
 
-		var fbLink = "https://www.facebook.com/benbenbobsoftware";
-		var twitterLink = "http://www.twitter.com/benbenbobsoft";
-		var liLink = "https://www.linkedin.com/in/benebrown";
-		var mailLink = "mailto:benbrown52@gmail.com";
-		var ghLink = "http://www.github.com/benbenbob1";
 		function setupLinks() {
+			var fbLink = "https://www.facebook.com/benbenbobsoftware";
+			var twitterLink = "http://www.twitter.com/benbenbobsoft";
+			var liLink = "https://www.linkedin.com/in/benebrown";
+			var mailLink = "mailto:benbrown52@gmail.com";
+			var ghLink = "http://www.github.com/benbenbob1";
+			
 			document.getElementById('fb-button').onclick = function(){window.open(fbLink);};
 			document.getElementById('twitter-button').onclick = function(){window.open(twitterLink);};
 			document.getElementById('in-button').onclick = function(){window.open(liLink);};
 			document.getElementById('email-button').onclick = function(){window.location = mailLink;};
 			document.getElementById('gh-button').onclick = function(){window.open(ghLink);};
+			document.getElementById('mobile_helper').onclick = function(e){mobileShowKeyboard(e);};
 		}
 		function showSidebar() {
 			$('#cmdList').show('slide', {direction: 'right'}, 500);
@@ -420,11 +422,12 @@ $(function() {
 			$('#mobile_helper').fadeIn('fast');
 			$('#textinput').hide();
 		}
-		function mobileShowKeyboard() {
+		function mobileShowKeyboard(event) {
+			alert()
 			$('#mobile_helper').fadeOut('fast');
-			$('#textinput').show();
+			$('#textinput').show(event);
 			$('#textinput').bind('blur', function(e){mobileKeyboardHidden();});
-			$('#textinput').focus();
+			$('#textinput').focus(event);
 		}
 		/*
 		To-do: fix mobile device text resizing 

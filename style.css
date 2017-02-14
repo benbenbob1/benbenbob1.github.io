@@ -89,7 +89,8 @@ body {
 	font-size: 40px;
 	font-family: 'Arial';
 	color: #000000;
-	
+	user-select: none;
+	-webkit-user-select: none;
 }
 .va {
 	position: relative;
