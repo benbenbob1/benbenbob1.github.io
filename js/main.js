@@ -97,7 +97,7 @@ $(function() {
 
 		var _cmdList = {
 			aboutCommand: function(args) {
-				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend engineer.\n\nI am looking for a Fall 2017 internship and full-time work.";
+				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend engineer.\n\nI am looking for a Fall 2017 internship and\nfull time work starting Summmer 2018.";
 			},
 			//Will not work locally
 			catCommand: function(args) {
@@ -212,7 +212,7 @@ $(function() {
 			},
 			styleCommand: function(args) {
 				if (args.length != 2 || args[1] == '') {
-					return 'usage: style colorscheme\n\twhere colorscheme is one of:\n\t\tterminal\n\t\tmsdos';
+					return 'usage: style colorscheme\n\twhere colorscheme is one of:\n\t\tterminal\n\t\tmsdos\n\t\tdark\n\t\thotdog';
 				}
 				return setStyle(args[1]);
 			}, 
@@ -292,6 +292,20 @@ $(function() {
 				textColor = 'white';
 				backgroundColor = 'black';
 				linkColor = 'blue';
+				prompt = 'C:\\>';
+				cursor = '͟';
+				fontSize = '16px';
+			} else if (style == "dark") {
+				textColor = '#f8f8f2';
+				backgroundColor = '#1a131f';
+				linkColor = '#FF99C6';
+				prompt = '$ ';
+				cursor = '▋';
+				fontSize = '16px';
+			} else if (style == "hotdog") {
+				textColor = 'white';
+				backgroundColor = '#ff0000';
+				linkColor = 'black';
 				prompt = 'C:\\>';
 				cursor = '͟';
 				fontSize = '16px';
