@@ -1,7 +1,7 @@
 $(function() {
         var siteName = "benbrown.science";
         var shortName = "bbs";
-        var version = 0.89;
+        var version = 0.90;
 
         /*                                            *
          *    Feel free to look around!               *
@@ -55,11 +55,25 @@ $(function() {
             'style'  : 'styleCommand'  ,
             'test'   : 'testCommand'   ,
         };
-
         //List of commands to be ignored by tab completion
         var ignoreList = [
             'skillz'
         ];
+
+        var parseableFiles = [
+            'index.html',
+            'me.txt',
+            'license.md',
+            'stuff.txt',
+            'style.css'
+        ].sort();
+
+        var parseableCommands = [];
+        for (var command in commands) {
+            if (ignoreList.indexOf(command) == -1) {
+                parseableCommands.push(command);
+            }
+        }
 
         (function(){ //SHHH...
             function load_script(url, callback) {
@@ -186,17 +200,33 @@ $(function() {
                 return allHistory;
             },
             lsCommand: function(args) {
-                for (arg in args) {
-                    if (args[arg].substring(0, 2) === './')
-                        args[arg] = args[arg].substring(2);
+                var hasArgs = false;
+                if (args.length > 1) {
+                    for (arg in args) {
+                        if (args[arg].substring(0, 2) === './')
+                            args[arg] = args[arg].substring(2);
+                    }
+                    hasArgs = true;
                 }
-                if (args[1] == 'js') {
-                    return 'main.js\ttyped.js';
-                } else if (args.length > 1) {
+                
+
+                if (args.length == 2 && parseableFiles.indexOf(args[1]) != -1) {
+                    return args[1];
+                } else if (hasArgs) {
                     return 'ls: '+args[1]+': No such file or directory';
                 }
-                return 'index.html\tskillstext.txt\tstyle.css\tjs'+
-                '\nme.txt\t\tstuff.txt';
+                var filesPerLine = 3;
+                var numFiles = parseableFiles.length;
+                var toDisplay = "";
+                for (var i=0; i<numFiles; i++) {
+                    toDisplay += parseableFiles[i];
+                    if (i>0 && (i+1)%filesPerLine == 0) {
+                        toDisplay += "\n";
+                    } else if (i!=numFiles-1) {
+                        toDisplay += "\t";
+                    }
+                }
+                return toDisplay;
             },
 
             //Will not work locally
@@ -406,12 +436,6 @@ $(function() {
                     }
                 } finally {
                     if (gotCommand === -1) {
-                        /*var header = "?cmd="+encodeURIComponent(str);
-                        result = $.ajaxSetup({async: false, timeout: 4000});
-                        var jqxhr = $.get( 'test.php'+header, function( data ) {
-                            if (!data) { result = "-bbcs: " + cmd + ": command not found"; }
-                            else { result = data.replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-                        }).fail (function() { result = 'command failed'; });*/
                         result = "-" + shortName + ": " + cmd + ": command not found";
                     }
                 }
@@ -599,23 +623,26 @@ $(function() {
             displayHtml(suggestionStr+"\n"+prompt+text);
         }*/
 
+        var fullParseList = null; //Pseudo-Lazy loading
         function getSuggestion(text) {
             var suggest = '';
             var len = text.length;
             var set = false;
-            for (cmd in commands) {
-                if (ignoreList.indexOf(cmd) != -1) {
-                    continue;
-                }
-                if (text === cmd.substring(0, len) && commands[cmd]) {
+            if (!fullParseList) { //Here's the lazy
+                fullParseList = parseableCommands.concat(parseableFiles);
+            }
+            for (var i=0; i<fullParseList.length; i++) {
+                var toFill = fullParseList[i];
+                if (text === toFill.substring(0, len)) {
                     if (set == true) {
                         suggest = '';
                         break;
                     }
-                    suggest = cmd.substring(len);
+                    suggest = toFill.substring(len)+" ";
                     set = true;
                 }
             }
+            console.log("Found suggestion: "+suggest);
             displayHtml(suggest);
         }
 
@@ -741,12 +768,8 @@ $(function() {
                         textCursor --;
                     }
                 } else if (e.keyCode == 9) { //tab
-                    /*if (tabPressed) {
-                        getAllSuggestions(extra);
-                    } else {*/
-                        getSuggestion(extra);
-                    //    tabPressed = true;
-                    //}
+                    var splitArr = extra.split(" ");
+                    getSuggestion(splitArr[splitArr.length-1]);
                 } else if (e.keyCode == 38 || e.keyCode == 40) {
                     if (e.keyCode == 38) { //up arrow
                         localStorage.last = extra;
@@ -754,8 +777,7 @@ $(function() {
                     } else if (e.keyCode == 40) { //dn arrow
                         historyCursor ++;
                         if (historyCursor < cmds.length) {
-                            
-                            extra =    cmds[historyCursor];
+                            extra =     cmds[historyCursor];
                             extraSize = extra.length;
                         }
                     }
@@ -769,7 +791,7 @@ $(function() {
                             extraSize = 0;
                         }
                     } else {
-                        extra =    cmds[historyCursor];
+                        extra = cmds[historyCursor];
                     }
                     extraSize = extra.length;
                     textCursor = extraSize;
