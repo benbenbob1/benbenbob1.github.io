@@ -289,6 +289,15 @@ $(function() {
         }
 
         /*
+        // TODO: style on start
+        var style = localStorage.getItem('style');
+        if (style) {
+            setStyle(style);
+        } else {
+            setStyle('terminal');
+        }*/
+
+        /*
          * Colors: 
          *        Macintosh Terminal (default): 
          *                Text: '#28FE14'
@@ -332,8 +341,7 @@ $(function() {
             }
             styleDict = newStyleDict;
 
-            //TODO
-            //localStorage.setItem('style', style);
+            localStorage.setItem('style', style);
 
             document.getElementById("cmdList").style.backgroundColor = styleDict.sidebarBG;
             document.getElementById("cmdList").style.color = styleDict.sidebarTextColor;
@@ -354,7 +362,6 @@ $(function() {
 
                 var highlighted = $(".highlighted");
                 for (var i=0; i<highlighted.length; i++) {
-                    //console.log($(highlighted[i]).css("background-color"));
                     highlighted[i].style.backgroundColor = styleDict.textColor;
                     highlighted[i].style.color = styleDict.backgroundColor;
                 }
@@ -546,13 +553,6 @@ $(function() {
                 localStorage.setItem('visited', 'true', { expires: 10 });
             }
         } catch (e) {}
-
-        //var style = localStorage.getItem('style');
-        /*if (style) {
-            setStyle(style);
-        } else {*/
-            setStyle('terminal');
-        //}
         
         var finishedTyping = false;
         var timingOrExtra = beenHereBefore?'\nWelcome back!^500':'^1000';
@@ -571,7 +571,7 @@ $(function() {
             cursorChar: styleDict.cursor,
             contentType: 'text',
             preStringTyped: function() {
-                $(".typed-cursor").css("color", "black");
+                $(".typed-cursor").css("color", styleDict.textColor);
                 finishedTyping = false;
             },
             callback: function() {
