@@ -555,8 +555,6 @@ $(function() {
         //}
         
         var finishedTyping = false;
-        var shifting = false;
-        //var timingOrExtra = beenHereBefore?('\n'+$.cookie('lastdate')):'^1000';
         var timingOrExtra = beenHereBefore?'\nWelcome back!^500':'^1000';
         //BenBrownCS.com
         var toType = siteName+', version '+version+' initialized.'+timingOrExtra+'\n\n'+styleDict.prompt;
@@ -567,7 +565,6 @@ $(function() {
         setupLinks();
         $(".element").typed({
             strings: [toType],
-            //typeSpeed: 0,
             startDelay: beenHereBefore?0:3000,
             typeSpeed: -400,
             showCursor: true,
@@ -600,29 +597,6 @@ $(function() {
             cursor.css('-moz-transform', str);
         }
 
-        /*
-        TODO
-        function getAllSuggestions(text) {
-            console.log("getting suggestions for "+text);
-            var len = text.length;
-            var suggestionStr = "\n";
-            var foundOne = false;
-            for (cmd in commands) {
-                if (ignoreList.indexOf(cmd) != -1) {
-                    continue;
-                }
-                if (text === cmd.substring(0, len) && commands[cmd]) {
-                    suggestionStr += cmd + "\t";
-                    foundOne = true;
-                }
-            }
-            if (foundOne == false) {
-                return;
-            }
-            extra = text;
-            displayHtml(suggestionStr+"\n"+prompt+text);
-        }*/
-
         var fullParseList = null; //Pseudo-Lazy loading
         function getSuggestion(text) {
             var suggest = '';
@@ -642,7 +616,6 @@ $(function() {
                     set = true;
                 }
             }
-            console.log("Found suggestion: "+suggest);
             displayHtml(suggest);
         }
 
@@ -651,33 +624,17 @@ $(function() {
                 var key = e.keyCode;
                 if (key <= 0) { key = e.charCode; }
             var typedStr = String.fromCharCode(key);
-
-            //TODO: replace > with &gt;
-            //https://jsfiddle.net/3e8tkLjo/
-
-            //typedStr = typedStr.replace(/\>/g,'&gt;').replace(/\</g, '&lt;');
-
-            //if (shifting) {
-            //    typedStr = typedStr.toUpperCase();
-            //}
             if (key == 8 || (key >= 37 && key <= 40)) { //backspace or arrow keys
                 return;
             } else if (key == 13) { //enter
                 $('#textinput').text('');
-                command = extra;
+                command = extra.trim();
                 beginning += extra + "\n";
-                if (command.length > 0 && command.trim() != '') {
+                if (command.length > 0) {
                     cmds.push(command);
                     var myEval = evaluate(command);
 
-                    beginning += myEval + "\n";
-                    
-                    /*if (command == "clear") {
-                        beginning = '';
-                        extra = '';
-                        extraSize = 0;
-                    }*/
-                    
+                    beginning += myEval + "\n";                    
                     historyCursor = cmds.length;
 
                     var newHeight = $($('.container')[0]).height() - styleDict.fontSize;
@@ -752,9 +709,6 @@ $(function() {
                 }
                 var elem = $(".element");
                 var typedStr = String.fromCharCode(e.keyCode);
-                if (!shifting) {
-                    //typedStr = typedStr.toLowerCase();
-                }
                 if (e.keyCode == 8) { //backspace
                     if (extraSize > 0 && textCursor > 0) {
                         if (textCursor < extra.length) {
@@ -812,6 +766,5 @@ $(function() {
             }
         });
 
-        $(document).on('keyup keydown', function(e){shifting = e.shiftKey} );
-        });
-    })
+    });
+})
