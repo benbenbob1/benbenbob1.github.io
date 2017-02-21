@@ -1,7 +1,7 @@
 $(function() {
 		var siteName = "benbrown.science";
 		var shortName = "bbs";
-		var version = 0.88;
+		var version = 0.89;
 
 		/*																*
 		 *		Feel free to look around!								*
@@ -97,7 +97,7 @@ $(function() {
 
 		var _cmdList = {
 			aboutCommand: function(args) {
-				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend engineer.\n\nI am looking for a Summer 2017 internship or co-op!";
+				return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend engineer.\n\nI am looking for a Fall 2017 internship and full-time work.";
 			},
 			//Will not work locally
 			catCommand: function(args) {
@@ -423,11 +423,10 @@ $(function() {
 			$('#textinput').hide();
 		}
 		function mobileShowKeyboard(event) {
-			alert()
-			$('#mobile_helper').fadeOut('fast');
+			$('#textinput').focus(event);
 			$('#textinput').show(event);
 			$('#textinput').bind('blur', function(e){mobileKeyboardHidden();});
-			$('#textinput').focus(event);
+			$('#mobile_helper').fadeOut('fast');
 		}
 		/*
 		To-do: fix mobile device text resizing 
