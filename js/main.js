@@ -3,23 +3,26 @@ $(function() {
         var shortName = "bbs";
         var version = 0.89;
 
-        /*                                                                *
-         *        Feel free to look around!                                *
-         *                                                                *
-         *                        benbrown52@gmail.com                    *
-         *                                                                *
-         *                                                                */
+        /*                                            *
+         *    Feel free to look around!               *
+         *                                            *
+         *                    benbrown52@gmail.com    *
+         *                                            *
+         *                                            */
 
-        var styleDict = {
-            textColor: '#28FE14',
-            backgroundColor: 'black',
-            linkColor: 'white',
-            prompt: '/var/root$ ',
-            cursor: '▋',
-            fontSize: '16px',
-            sidebarBG: 'lightgray',
-            sidebarTextColor: 'blue'
-        };
+        function defaultStyle() {
+            return {
+                textColor: '#28FE14',
+                backgroundColor: 'black',
+                linkColor: 'white',
+                prompt: '/var/root$ ',
+                cursor: '▋',
+                fontSize: '16px',
+                sidebarBG: 'lightgray',
+                sidebarTextColor: 'blue'
+            };
+        }
+        var styleDict = defaultStyle();
         var extra = '';
         var beginning = '';
         var extraSize = 0;
@@ -35,22 +38,22 @@ $(function() {
         //Map of commands to their function
         //function looks like nameOfFunction(args)
         var commands = {
-            'about'     : 'aboutCommand'     ,
-            'cat'        : 'catCommand'         ,
-            'clear'      : 'clearCommand'     ,
-            'contact'    : 'contactCommand'     ,
-            'echo'        : 'echoCommand'     ,
-            'hello'      : 'helloCommand'     ,
-            'help'        : 'helpCommand'     ,
-            'history'     : 'historyCommand'     ,
-            'ls'          : 'lsCommand'          ,
-            'me'        : 'meCommand'         ,
-            'resume'     : 'resumeCommand'      ,
-            'skills'     : 'skillsCommand'     ,
-            'skillz'    : 'skillzCommand'     , //ignore 
-            'stuff'      : 'stuffCommand'     ,
-            'style'      : 'styleCommand'     ,
-            'test'        : 'testCommand'     ,
+            'about'  : 'aboutCommand'  ,
+            'cat'    : 'catCommand'    ,
+            'clear'  : 'clearCommand'  ,
+            'contact': 'contactCommand',
+            'echo'   : 'echoCommand'   ,
+            'hello'  : 'helloCommand'  ,
+            'help'   : 'helpCommand'   ,
+            'history': 'historyCommand',
+            'ls'     : 'lsCommand'     ,
+            'me'     : 'meCommand'     ,
+            'resume' : 'resumeCommand' ,
+            'skills' : 'skillsCommand' ,
+            'skillz' : 'skillzCommand' , //ignore 
+            'stuff'  : 'stuffCommand'  ,
+            'style'  : 'styleCommand'  ,
+            'test'   : 'testCommand'   ,
         };
 
         //List of commands to be ignored by tab completion
@@ -116,7 +119,6 @@ $(function() {
                     return 'why don\'t you just view the source?';
                 }
                 var out = '';
-                //$.ajaxSetup({async: false, timeout: 3000});
                 var ajax = $.ajax({
                     url: args[1],
                     success: function(data) {
@@ -128,10 +130,6 @@ $(function() {
                     timeout: 3000,
                     async: false
                 });
-                /*
-                var jqxhr = $.get( args[1], function( data ) {
-                    out = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                }).fail (function() { out = 'read failed'; });*/
                 return out;
             },
             clearCommand: function(args) {
@@ -164,15 +162,6 @@ $(function() {
                 }
                 return result;
             },
-            /*function colorCommand(args) {
-                if (args.length != 2 || args[1] == '' || args[1].length != 2) {
-                    return 'usage: color <background><foreground>\n\twhere each color is a hex digit:\n\t\t0 = Black\n\t\t1 = Blue\n\t\t9 = Light Blue\n\t\t2 = Green\n\t\tA = Light Green\n\t\t3 = Aqua\n\t\tB = Light Aqua\n\t\t4 = Red\n\t\tC = Light Red\n\t\t5 = Purple\n\t\tD = Light Purple\n\t\t6 = Yellow\n\t\tE = Light Yellow\n\t\t7 = White\n\t\tF = Bright White';
-                }
-                var colors = args[1].split("");
-                var c1 = colors[0];
-                var c2 = colors[1];
-                
-            }*/
             echoCommand: function(args) {
                 result = '';
                 for (var i=1; i<args.length; i++) {
@@ -277,55 +266,41 @@ $(function() {
          *                Prompt: '/var/root$ ' (space at end intentional)
          *                LinkColor: 'white'
          *                Cursor: '▋'
-         *        Windows Command Prompt:
-         *                 Text: 'white'
-         *                Background: 'black'
-         *                LinkColor: 'blue'
-         *                Prompt: '>'
-         *                Cursor: '_'
          */
 
         function setStyle(style) {
             var isDefault = style == "terminal";
+            var newStyleDict = defaultStyle();
             if (style == "terminal") {
-                styleDict.textColor =       '#28FE14';
-                styleDict.backgroundColor = 'black';
-                styleDict.linkColor =       'white';
-                styleDict.prompt =          '/var/root$ ';
-                styleDict.cursor =          '▋';
-                styleDict.fontSize =        '16px';
-                styleDict.sidebarBG =       'lightgray';
-                styleDict.sidebarTextColor ='blue';
+                //Nothing needed here
             } else if (style == "msdos") {
-                styleDict.textColor =       'white';
-                styleDict.backgroundColor = 'black';
-                styleDict.linkColor =       'blue';
-                styleDict.prompt =          'C:\\>';
-                styleDict.cursor =          '͟';
-                styleDict.fontSize =        '16px';
-                styleDict.sidebarBG =       'white';
-                styleDict.sidebarTextColor ='black';
+                newStyleDict.textColor =       'white';
+                newStyleDict.backgroundColor = 'black';
+                newStyleDict.linkColor =       'blue';
+                newStyleDict.prompt =          'C:\\>';
+                newStyleDict.cursor =          '͟';
+                newStyleDict.sidebarBG =       'white';
+                newStyleDict.sidebarTextColor ='black';
             } else if (style == "dark") {
-                styleDict.textColor =       '#E6DB74';
-                styleDict.backgroundColor = '#1A131F';
-                styleDict.linkColor =       '#FF99C6';
-                styleDict.prompt =          '$ ';
-                styleDict.cursor =          '▋';
-                styleDict.fontSize =        '16px';
-                styleDict.sidebarBG =       '#1A131F';
-                styleDict.sidebarTextColor ='#A781FF';
+                newStyleDict.textColor =       '#E6DB74';
+                newStyleDict.backgroundColor = '#1A131F';
+                newStyleDict.linkColor =       '#FF99C6';
+                newStyleDict.prompt =          '$ ';
+                newStyleDict.sidebarBG =       '#1A131F';
+                newStyleDict.sidebarTextColor ='#A781FF';
             } else if (style == "hotdog") {
-                styleDict.textColor =       '#EBFF00';
-                styleDict.backgroundColor = '#FF0000';
-                styleDict.linkColor =       'white';
-                styleDict.prompt =          'C:\\>';
-                styleDict.cursor =          '͟';
-                styleDict.fontSize =        '18px';
-                styleDict.sidebarBG =       '#EBFF00';
-                styleDict.sidebarTextColor ='#FF0000';
+                newStyleDict.textColor =       '#EBFF00';
+                newStyleDict.backgroundColor = '#FF0000';
+                newStyleDict.linkColor =       'white';
+                newStyleDict.prompt =          'C:\\>';
+                newStyleDict.cursor =          '͟';
+                newStyleDict.fontSize =        '18px';
+                newStyleDict.sidebarBG =       '#EBFF00';
+                newStyleDict.sidebarTextColor ='#FF0000';
             } else {
                 return 'Unknown style ' + style;
             }
+            styleDict = newStyleDict;
 
             //TODO
             //localStorage.setItem('style', style);
