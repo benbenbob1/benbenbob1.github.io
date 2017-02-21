@@ -10,8 +10,16 @@ $(function() {
 		 *																*
 		 *																*/
 
-		var textColor, backgroundColor, linkColor, prompt, cursor, fontSize;
-
+		var styleDict = {
+			textColor: '#28FE14',
+			backgroundColor: 'black',
+			linkColor: 'white',
+			prompt: '/var/root$ ',
+			cursor: '▋',
+			fontSize: '16px',
+			sidebarBG: 'lightgray',
+			sidebarTextColor: 'blue'
+		};
 		var extra = '';
 		var beginning = '';
 		var extraSize = 0;
@@ -277,38 +285,36 @@ $(function() {
 		 *				Cursor: '_'
 		 */
 
-		//TO DO: colors
 		function setStyle(style) {
-			//if (!style || style.legth == 0) {}
 			var isDefault = style == "terminal";
 			if (style == "terminal") {
-				textColor = '#28FE14';
-				backgroundColor = 'black';
-				linkColor = 'white';
-				prompt = '/var/root$ ';
-				cursor = '▋';
-				fontSize = '16px';
+
 			} else if (style == "msdos") {
-				textColor = 'white';
-				backgroundColor = 'black';
-				linkColor = 'blue';
-				prompt = 'C:\\>';
-				cursor = '͟';
-				fontSize = '16px';
+				styleDict.textColor = 'white';
+				styleDict.backgroundColor = 'black';
+				styleDict.linkColor = 'blue';
+				styleDict.prompt = 'C:\\>';
+				styleDict.cursor = '͟';
+				styleDict.fontSize = '16px';
+				styleDict.sidebarBG = 'lightgray';
+				styleDict.sidebarTextColor = 'blue';
 			} else if (style == "dark") {
-				textColor = '#f8f8f2';
-				backgroundColor = '#1a131f';
-				linkColor = '#FF99C6';
-				prompt = '$ ';
-				cursor = '▋';
-				fontSize = '16px';
+				styleDict.textColor = '#E6DB74';
+				styleDict.backgroundColor = '#1a131f';
+				styleDict.linkColor = '#FF99C6';
+				styleDict.prompt = '$ ';
+				styleDict.fontSize = '16px';
+				styleDict.sidebarBG = 'lightgray';
+				styleDict.sidebarTextColor = 'blue';
 			} else if (style == "hotdog") {
-				textColor = 'white';
-				backgroundColor = '#ff0000';
-				linkColor = 'black';
-				prompt = 'C:\\>';
-				cursor = '͟';
-				fontSize = '16px';
+				styleDict.textColor = '#EBFF00';
+				styleDict.backgroundColor = '#FF0000';
+				styleDict.linkColor = 'white';
+				styleDict.prompt = 'C:\\>';
+				styleDict.cursor = '͟';
+				styleDict.fontSize = '18px';
+				styleDict.sidebarBG = '#EBFF00';
+				styleDict.sidebarTextColor = '#FF0000';
 			} else {
 				return 'Unknown style ' + style;
 			}
@@ -316,25 +322,28 @@ $(function() {
 			//TODO
 			//localStorage.setItem('style', style);
 
-			document.getElementsByTagName("html")[0].style.backgroundColor = backgroundColor;
+			document.getElementById("cmdList").style.backgroundColor = styleDict.sidebarBG;
+			document.getElementById("cmdList").style.color = styleDict.sidebarTextColor;
+
+			document.getElementsByTagName("html")[0].style.backgroundColor = styleDict.backgroundColor;
 			
 			if (document.getElementsByClassName("typed-cursor").length >= 1) {
 
 				var text = $(".title_hero");
 				var i = 0; //Don't want everything changing
 				//for (var i=0; i<text.length; i++) {
-					$(text[i]).css("font-size", fontSize);
-					$(text[i]).css("color", textColor);
+					$(text[i]).css("font-size", styleDict.fontSize);
+					$(text[i]).css("color", styleDict.textColor);
 				//}
 
-				document.getElementsByClassName("typed-cursor")[0].style.color = textColor;
-				document.getElementsByClassName("typed-cursor")[0].innerHTML = cursor;
+				document.getElementsByClassName("typed-cursor")[0].style.color = styleDict.textColor;
+				document.getElementsByClassName("typed-cursor")[0].innerHTML = styleDict.cursor;
 
 				var highlighted = $(".highlighted");
 				for (var i=0; i<highlighted.length; i++) {
 					//console.log($(highlighted[i]).css("background-color"));
-					highlighted[i].style.backgroundColor = textColor;
-					highlighted[i].style.color = backgroundColor;
+					highlighted[i].style.backgroundColor = styleDict.textColor;
+					highlighted[i].style.color = styleDict.backgroundColor;
 				}
 
 				/*var links = document.getElementsByClassName("title_hero highlighted");
@@ -661,7 +670,7 @@ $(function() {
 					
 					historyCursor = cmds.length;
 
-					var newHeight = $($('.container')[0]).height() - fontSize;
+					var newHeight = $($('.container')[0]).height() - styleDict.fontSize;
 					$('#textinput').position({top: newHeight+'px', left: '-15px'});
 				}
 				beginning += prompt;
