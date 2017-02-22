@@ -63,11 +63,10 @@ body {
 	height: 20px;
 	margin: 0 auto;
 	z-index: -99;
-	left: -50px;
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
-	display: none;
+	/*display: none;*/
 	font-size: 0px;
 	color: #000;
 	overflow: hidden;
