@@ -171,7 +171,14 @@ $(function() {
 
     var _cmdList = {
         aboutCommand: function(args) {
-            return "\n‘« About Me »’\nHello. My name is Ben Brown.\nI am a freelance mobile app developer as well\nas a web frontend and backend engineer.\n\nI am looking for a Fall 2017 internship and\nfull time work starting Summmer 2018.";
+            return "\n‘« About Me »’\n"
+                + "Hello. My name is Ben Brown.\n"
+                + "I am a tinkerer and an inventer as well\n"
+                + "as a full stack engineer.\n\n"
+                + "I am looking for a Fall 2017 internship and\n"
+                + "full time work starting Summmer 2018.\n\n"
+                + "You can reach me using the <u>contact</u> command\n"
+                + "or view my Resume with <u>resume</u>."
         },
         //Will not work locally
         catCommand: function(args) {
@@ -210,7 +217,7 @@ $(function() {
                 result = 'Opening twitter...';
                 $('#twitter-button').click();
             } else if (args[1] === "-r") {
-                result = resumeCommand();
+                result = _cmdList.resumeCommand();
             } else if (args[1] === "-l") {
                 result = 'Opening LinkedIn...';
                 $('#in-button').click();
