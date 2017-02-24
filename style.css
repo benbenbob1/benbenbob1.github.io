@@ -1,20 +1,26 @@
 html, body {
   margin: 0;
 }
-html {
-  background-color: #000000;
-  padding: 10px 10px 30px 10px;
-  color: #ccc;
-  z-index: 0;
-}
-body {
-	
+
+#containermain {
+	background-color: #000000;
+	color: #ccc;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    overflow: scroll;
 }
 
 .container {
 	overflow-wrap: break-word;
 	width: 82%;
-	z-index:0;
+	z-index: 0;
+	padding: 10px 10px 30px 10px;
+	position: absolute;
+	margin-bottom: 30px;
 }
 
 .title_hero {
@@ -57,16 +63,14 @@ body {
 }
 
 #textinput {
-	position: absolute;
+	position: fixed;
 	opacity: 0;
 	width: 100%;
 	height: 20px;
 	margin: 0 auto;
-	z-index: -99;
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
-	/*display: none;*/
 	font-size: 0px;
 	color: #000;
 	overflow: hidden;

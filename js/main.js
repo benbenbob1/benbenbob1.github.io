@@ -1,7 +1,7 @@
 $(function() {
     var siteName = "benbrown.science";
     var shortName = "bbs";
-    var version = 0.91;
+    var version = 0.92;
 
     /*                                            *
      *    Feel free to look around!               *
@@ -29,8 +29,11 @@ $(function() {
     var command = '';
     var cmds = [];
 
+    var containerMain = $('#containermain');
     var container = $($('.container')[0]);
     var deviceInputArea = $('#textinput');
+    var element = $(".element");
+    var cursor = $('.typed-cursor');
 
     var tabPressed = false;
 
@@ -40,7 +43,8 @@ $(function() {
 
     //START POINT
     
-    // set the initial state (but only if browser supports the Page Visibility API)
+    // set the initial state
+    // (only if browser supports the Page Visibility API)
     if( document[hidden] !== undefined )
     onchange({type: document[hidden] ? "blur" : "focus"});
 
@@ -54,14 +58,19 @@ $(function() {
     var finishedTyping = false;
     var timingOrExtra = beenHereBefore?'\nWelcome back!^500':'^1000';
     //BenBrownCS.com
-    var toType = siteName+', version '+version+' initialized.'+timingOrExtra+'\n\n'+styleDict.prompt;
+    var toType = siteName
+        + ', version '
+        + version
+        + ' initialized.'
+        + timingOrExtra
+        + '\n\n'
+        + styleDict.prompt;
     var historyCursor = -1;
     var textCursor = 0;
     var showingSocial = false;
-    var elem = $(".element");
     setupLinks();
 
-    $(".element").typed({
+    element.typed({
         strings: [toType],
         startDelay: beenHereBefore?0:3000,
         typeSpeed: -400,
@@ -69,17 +78,20 @@ $(function() {
         cursorChar: styleDict.cursor,
         contentType: 'text',
         preStringTyped: function() {
-            $(".typed-cursor").css("color", styleDict.textColor);
+            cursor.css("color", styleDict.textColor);
             finishedTyping = false;
         },
         callback: function() {
-            $(".typed-cursor").css("color", "");
+            cursor.css("color", "");
             finishedTyping = true;
-            beginning = $(".element").text();
+            beginning = element.text();
             if (beenHereBefore) { showSidebar(); showingSocial = true; }
             else 
                 setTimeout(function(){
-                    if (!showingSocial) { showSidebar(); showingSocial = true; }
+                    if (!showingSocial) { 
+                        showSidebar();
+                        showingSocial = true;
+                    }
                 }, 9000);
         }
     });
@@ -156,13 +168,16 @@ $(function() {
                 if (i==lookFor.length) {
                     entered = [];
                     enteredAlready = true;
-                    load_script("https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js", function() {
-                        load_css("secret.css", function() {
-                            load_script("js/secret.min.js", function() {
-                                console.log("Woah");
+                    load_script("https://cdnjs.cloudflare.com/ajax"
+                        + "/libs/velocity/1.2.3/velocity.min.js",
+                        function() {
+                            load_css("secret.css", function() {
+                                load_script("js/secret.min.js", function() {
+                                    console.log("Woah");
+                                });
                             });
-                        });
-                    });
+                        }
+                    );
                 }
             }
         });
@@ -183,10 +198,12 @@ $(function() {
         //Will not work locally
         catCommand: function(args) {
             if (args.length < 2 || args[1] == ' ' || args[1] == '') {
-                return 'usage: cat file1\n\tprints the contents of <u>file1</u>.';
+                return "usage: cat file1\n"
+                    + "\tprints the contents of <u>file1</u>.";
             } 
-            if (args[1] == 'index.html' || args[1] == '.' || args[1] == '/' || args[1] == 'index') {
-                return 'why don\'t you just view the source?';
+            if (args[1] == 'index.html' || args[1] == '.'
+                || args[1] == '/' || args[1] == 'index') {
+                return "why don\'t you just view the source?";
             }
             var out = '';
             var ajax = $.ajax({
@@ -211,24 +228,31 @@ $(function() {
         contactCommand: function(args) {
             var result = '';
             if (args[1] === "-f") { 
-                result = 'Opening facebook...'; 
+                result = "Opening facebook...";
                 $('#fb-button').click();
             } else if (args[1] === "-t") {
-                result = 'Opening twitter...';
+                result = "Opening twitter...";
                 $('#twitter-button').click();
             } else if (args[1] === "-r") {
                 result = _cmdList.resumeCommand();
             } else if (args[1] === "-l") {
-                result = 'Opening LinkedIn...';
+                result = "Opening LinkedIn...";
                 $('#in-button').click();
             } else if (args[1] === "-g") {
-                result = 'Opening GitHub...';
+                result = "Opening GitHub...";
                 $('#gh-button').click();
             } else if (args[1] === "-e") {
-                result = 'Opening email client...';
+                result = "Opening email client...";
                 $('#email-button').click();
             } else {
-                result = 'usage: contact -ftlger\n\tfind me on:\n\t\t-f Facebook\n\t\t-t Twitter\n\t\t-l LinkedIn\n\t\t-g GitHub\n\t\t-e Email\n\t-r View my resume';
+                result = "usage: contact -ftlger\n"
+                    + "\tfind me on:\n"
+                    + "\t\t-f Facebook\n"
+                    + "\t\t-t Twitter\n"
+                    + "\t\t-l LinkedIn\n"
+                    + "\t\t-g GitHub\n"
+                    + "\t\t-e Email\n"
+                    + "\t-r View my resume";
             }
             return result;
         },
@@ -243,7 +267,13 @@ $(function() {
             return "hey there!";
         },
         helpCommand: function(args) {
-            return "\nabout: all about me, Ben Brown!\nskills: what can I do for you?\nstuff: some things I've done\ncontact: how to find me\n\nSome commands:\n\techo\tcat\tls\tstyle\n\thistory\nMore commands to come!";
+            return "\nabout: all about me, Ben Brown!\n"
+                + "skills: what can I do for you?\n"
+                + "stuff: some things I've done\n"
+                + "contact: how to find me\n\n"
+                + "Some commands:\n"
+                + "\techo\tcat\tls\tstyle\n"
+                + "\thistory\nMore commands to come!";
         },
         historyCommand: function(args) {
             var allHistory = "";
@@ -295,18 +325,73 @@ $(function() {
         },
         styleCommand: function(args) {
             if (args.length != 2 || args[1] == '') {
-                return 'usage: style colorscheme\n\twhere colorscheme is one of:\n\t\tterminal\n\t\tmsdos\n\t\tdark\n\t\thotdog';
+                return "usage: style colorscheme\n"
+                    + "\twhere colorscheme is one of:\n"
+                    + "\t\tterminal\n"
+                    + "\t\tmsdos\n"
+                    + "\t\tdark\n"
+                    + "\t\thotdog";
             }
             return setStyle(args[1]);
         }, 
         stuffCommand: function(args) {
-            return "\n‘« Stuff »’\nSome things I've done:\n • Created a Bluetooth audio receiver using a Raspberry Pi, C, and a few shell scripts\n • Created a webserver and associated iPhone app to control the led light strips in my room using a custom circuit, said Raspberry Pi, C, and Objective-C\n • Wrote a program that takes the music I'm listening to and makes the lights respond to the music using C\n • Wrote this website in JavaScript :)";
+            return "\n‘« Stuff »’\nSome things I've done:\n"
+                + " • Created a Bluetooth audio receiver using a "
+                + "Raspberry Pi, C, and a few shell scripts\n"
+                + " • Created a webserver and associated iPhone app "
+                + "to control the led light strips in my room using "
+                + "a custom circuit, said Raspberry Pi, C, and Objective-C\n"
+                + " • Wrote a program that takes the music I'm listening "
+                + "to and makes the lights respond to the music using C\n"
+                + " • Wrote this website in Javascript :)";
         }, 
         skillsCommand: function(args) {
-            return "\n‘« My Skills »’\nWhat I can do:\n\tJavascript\t[«       » ]\n\tObjective C\t[«       » ]\n\tC\t\t[«       » ]\n\tCSS\t\t[«       » ]\n\tJava\t\t[«      »  ]\n\tPHP\t\t[«      »  ]\n\tBash\t\t[«     »   ]\n\tjQuery\t\t[«     »   ]\n\tPython\t\t[«     »   ]\n\tMIPS\t\t[«    »    ]\n\tSQL\t\t[«    »    ]\n\tSwift\t\t[«    »    ]\n\tC++\t\t[«   »     ]\n\tFlask\t\t[«   »     ]\n\tMongo\t\t[«   »     ]\n\tNode\t\t[«   »     ]\n\tErlang\t\t[«  »      ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism";
+            return "\n‘« My Skills »’\nWhat I can do:\n"
+                + "\tJavascript\t[«       » ]\n"
+                + "\tObjective C\t[«       » ]\n"
+                + "\tC\t\t[«       » ]\n"
+                + "\tCSS\t\t[«       » ]\n"
+                + "\tJava\t\t[«      »  ]\n"
+                + "\tPHP\t\t[«      »  ]\n"
+                + "\tBash\t\t[«     »   ]\n"
+                + "\tjQuery\t\t[«     »   ]\n"
+                + "\tPython\t\t[«     »   ]\n"
+                + "\tMIPS\t\t[«    »    ]\n"
+                + "\tSQL\t\t[«    »    ]\n"
+                + "\tSwift\t\t[«    »    ]\n"
+                + "\tC++\t\t[«   »     ]\n"
+                + "\tFlask\t\t[«   »     ]\n"
+                + "\tMongo\t\t[«   »     ]\n"
+                + "\tNode\t\t[«   »     ]\n"
+                + "\tErlang\t\t[«  »      ]\n"
+                + "\nWhat I cannot do:\n"
+                + "\tRaise one eyebrow\n"
+                + "\tBake a banana rhubarb pie\n"
+                + "\tPerform an exorcism";
         },
         skillzCommand: function(args) {
-            return "\n‘« Ma $killz »’\nWhat I can programmerate:\n\tCizzle\t\t[«          »]\n\tCizzle++\t[«        »  ]\n\tObjectin-Cizzle\t[«          »]\n\t$wift\t\t[«       »   ]\n\tMakin a brew\t[«        »  ]\n\tHTMLFam\t\t[«      »    ]\n\tJavaScrizzle\t[«         » ]\n\tjQuerian\t[«        »  ]\n\tHIP\t\t[«     »     ]\n\tDa snake\t[«       »   ]\n\nNah:\n\tBrow liftin\n\tPie bakin\n\tExorcisin'";
+            return "\n‘« Ma $killz »’\nYah:\n"
+                + "\tJayscrizzle\t[«       » ]\n"
+                + "\tObjectin-Cizzle\t[«       » ]\n"
+                + "\tCizzle\t\t[«       » ]\n"
+                + "\tSee Ess Ess\t[«       » ]\n"
+                + "\tJive\t\t[«      »  ]\n"
+                + "\tHIP\t\t[«      »  ]\n"
+                + "\tBish\t\t[«     »   ]\n"
+                + "\tjQuizzle\t[«     »   ]\n"
+                + "\tDa snake\t[«     »   ]\n"
+                + "\t'Sembly\t\t[«    »    ]\n"
+                + "\tMaSQL\t\t[«    »    ]\n"
+                + "\t$wift\t\t[«    »    ]\n"
+                + "\tCizzle++\t[«   »     ]\n"
+                + "\tFlazzzk\t\t[«   »     ]\n"
+                + "\tMongo DeesBees\t[«   »     ]\n"
+                + "\tReal devs only\t[«   »     ]\n"
+                + "\tErlang\t\t[«  »      ]\n"
+                + "\nNah:\n"
+                + "\tBrow liftin\n"
+                + "\tRhubarb pie bakin\n"
+                + "\tExorcisin'";
         },
         testCommand: function(args) {
             return "success!";
@@ -329,7 +414,9 @@ $(function() {
                 case STR_PAD_BOTH:
                     var right = Math.ceil((padlen = len - str.length) / 2);
                     var left = padlen - right;
-                    str = Array(left+1).join(pad) + str + Array(right+1).join(pad);
+                    str = Array(left+1).join(pad) 
+                        + str
+                        + Array(right+1).join(pad);
                 break;
 
                 default:
@@ -398,10 +485,13 @@ $(function() {
 
         localStorage.setItem('style', style);
 
-        document.getElementById("cmdList").style.backgroundColor = styleDict.sidebarBG;
-        document.getElementById("cmdList").style.color = styleDict.sidebarTextColor;
+        document.getElementById("cmdList").style.backgroundColor =
+            styleDict.sidebarBG;
+        document.getElementById("cmdList").style.color =
+            styleDict.sidebarTextColor;
 
-        document.getElementsByTagName("html")[0].style.backgroundColor = styleDict.backgroundColor;
+        containerMain[0].style.backgroundColor =
+            styleDict.backgroundColor;
         
         if (document.getElementsByClassName("typed-cursor").length >= 1) {
 
@@ -412,19 +502,16 @@ $(function() {
                 $(text[i]).css("color", styleDict.textColor);
             //}
 
-            document.getElementsByClassName("typed-cursor")[0].style.color = styleDict.textColor;
-            document.getElementsByClassName("typed-cursor")[0].innerHTML = styleDict.cursor;
+            document.getElementsByClassName("typed-cursor")[0].style.color =
+                styleDict.textColor;
+            document.getElementsByClassName("typed-cursor")[0].innerHTML =
+                styleDict.cursor;
 
             var highlighted = $(".highlighted");
             for (var i=0; i<highlighted.length; i++) {
                 highlighted[i].style.backgroundColor = styleDict.textColor;
                 highlighted[i].style.color = styleDict.backgroundColor;
             }
-
-            /*var links = document.getElementsByClassName("title_hero highlighted");
-            for (var i=0; i<links.length; i++) {
-                console.log(links[i].children);
-            }*/
         }
 
         _cmdList[commands['clear']]('');
@@ -443,16 +530,28 @@ $(function() {
         var mailLink = "mailto:benbrown52@gmail.com";
         var ghLink = "http://www.github.com/benbenbob1";
         
-        document.getElementById('fb-button').onclick = function(){window.open(fbLink);};
-        document.getElementById('twitter-button').onclick = function(){window.open(twitterLink);};
-        document.getElementById('in-button').onclick = function(){window.open(liLink);};
-        document.getElementById('email-button').onclick = function(){window.location = mailLink;};
-        document.getElementById('gh-button').onclick = function(){window.open(ghLink);};
+        document.getElementById('fb-button').onclick = function(){
+            window.open(fbLink);
+        };
+        document.getElementById('twitter-button').onclick = function(){
+            window.open(twitterLink);
+        };
+        document.getElementById('in-button').onclick = function(){
+            window.open(liLink);
+        };
+        document.getElementById('email-button').onclick = function(){
+            window.location = mailLink;
+        };
+        document.getElementById('gh-button').onclick = function(){
+            window.open(ghLink);
+        };
     }
 
     function showSidebar() {
         $('#cmdList').show('slide', {direction: 'right'}, 500);
-        $('#contactmenu_container').fadeIn(500, function(){resizeContainerForSidebar();});
+        $('#contactmenu_container').fadeIn(500, 
+            function(){resizeContainerForSidebar();}
+        );
     }
     function htmlImage() {
         var out = '';
@@ -468,13 +567,18 @@ $(function() {
         extraSize += html.length;
         textCursor += html.length;
 
-        elem.html(beginning + extra);
+        element.html(beginning + extra);
         updateCursor();
+    }
+
+    function commandNotFoundText(command) {
+        return "-" + shortName 
+            + ": " + command 
+            + ": command not found";
     }
 
     //TODO: create error function
     function evaluate(str) {
-        var elem = $(".element");
         var args = str.toString().split(' ');
         var cmd = args[0];
         var result = "";
@@ -488,8 +592,7 @@ $(function() {
                         if (gotCommand) {
                             theCommand = _cmdList[gotCommand](args);
                             if (theCommand === null) {
-                                //
-                                result = "-" + shortName + ": " + cmd + ": command not found";
+                                result = commandNotFoundText(cmd);
                             } else {
                                 result = theCommand
                             }
@@ -498,7 +601,7 @@ $(function() {
                 }
             } finally {
                 if (gotCommand === -1) {
-                    result = "-" + shortName + ": " + cmd + ": command not found";
+                    result = commandNotFoundText(cmd);
                 }
             }
             
@@ -511,23 +614,16 @@ $(function() {
     }
 
     /*
-    function mobileKeyboardHidden() {
-        $('#mobile_helper').fadeIn('fast');
-        $('#textinput').hide();
-    }
-    function mobileShowKeyboard(event) {
-        $('#textinput').focus(event);
-        $('#textinput').show(event);
-        $('#textinput').bind('blur', function(e){mobileKeyboardHidden();});
-        $('#mobile_helper').fadeOut('fast');
-    }
-    */
-    /*
     TODO: fix mobile device text resizing 
 
     */
-    var device = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
-    var android = device && (/android/i.test(navigator.userAgent.toLowerCase()));
+    var device = (
+        (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i)
+        .test(navigator.userAgent.toLowerCase())
+    );
+    var android = device && (/android/i.test(
+        navigator.userAgent.toLowerCase()
+    ));
     var hidden = "hidden";
     if (device) { // User is using a mobile device
         setupMobile();
@@ -547,7 +643,11 @@ $(function() {
             document.onfocusin = document.onfocusout = onchange;
         // All others:
         else
-            window.onpageshow = window.onpagehide = window.onfocus = window.onblur = onchange;
+            window.onpageshow
+            = window.onpagehide
+            = window.onfocus
+            = window.onblur
+            = onchange;
     } catch(err) {
         console.log("Failed trying to catch unfocus event!");
     }
@@ -566,11 +666,11 @@ $(function() {
     }
 
     $(window).focus(function() {
-        $('.typed-cursor').attr('id', '');
+        cursor.attr('id', '');
     });
 
     $(window).blur(function() {
-        $('.typed-cursor').attr('id', 'unfocused');
+        cursor.attr('id', 'unfocused');
     });
 
     function resizeContainerForSidebar() {
@@ -584,13 +684,20 @@ $(function() {
     });
 
     function scrollToBottom() {
-        if (!device) {
-            window.scrollTo(0,document.body.scrollHeight);
+        if (!containerMain.is(':animated')) {
+            var scrollTop = 0;
+            if (!device) {
+                scrollTop = container.height();
+            } else {
+                scrollTop = deviceInputArea.offset().top-200;
+            }
+            containerMain.stop().animate({
+                scrollTop: scrollTop
+            }, 400);
         }
     }
 
     function updateCursor() {
-        var cursor = $('.typed-cursor');
         var amntLeft = -0.6*(extraSize-textCursor);
         var str = 'translate('+amntLeft+'em, 0px)';
         cursor.css('-webkit-transform', str);
@@ -643,22 +750,24 @@ $(function() {
         deviceInputArea.css('backgroundColor', "white");
         deviceInputArea.css('opacity', "0.2");
         deviceInputArea.css('display', "block");
-        deviceInputArea.css('top', "0%");
+        deviceInputArea.css('top', "0");
         var firstTime = true;
         deviceInputArea.on('focus', function(event) {
             if (firstTime) {
                 deviceInputArea.css('opacity', "0.0");
                 deviceInputArea.css('height', "20px");
                 deviceInputArea.css('top', "50%");
+
+                deviceInputArea.on('blur', function(event) {
+                    setupMobile();
+                });
+                deviceInputArea.unbind('keypress').bind('keypress',
+                    evaluateKeypress);
+                deviceInputArea.unbind('keydown').bind('keydown',
+                    evaluateKeydown);
+                
                 firstTime = false;
             }
-            deviceInputArea.on('blur', function(event) {
-                setupMobile();
-            });
-            deviceInputArea.unbind('keypress').bind('keypress',
-                evaluateKeypress);
-            deviceInputArea.unbind('keydown').bind('keydown',
-                evaluateKeydown);
         });
     }
 
@@ -668,13 +777,21 @@ $(function() {
             var key = event.keyCode;
             if (key <= 0) { key = event.charCode; }
             var typedStr = String.fromCharCode(key);
-            if (key == 8 || (key >= 37 && key <= 40)) { //backspace or arrow keys
-                return;
+            if (key == 8 || (key >= 37 && key <= 40)) { 
+                return; //backspace or arrow keys
+            } else if ((event.ctrlKey && typedStr == 'C')
+                || (key == 3)) { //ctrl+C
+                beginning += extra+"\n"+styleDict.prompt;
+                extra = '';
+                extraSize = 0;
+                textCursor = 0;
+                command = '';
+                updateCursor();
             } else if (key == 13) { //enter
                 deviceInputArea.text('');
                 command = extra.trim();
                 beginning += extra + "\n";
-                if (command.length > 0) {
+                if (command && command.length > 0) {
                     cmds.push(command);
                     var myEval = evaluate(command);
 
@@ -682,7 +799,9 @@ $(function() {
                     historyCursor = cmds.length;
 
                     var newHeight = container.height() - styleDict.fontSize;
-                    deviceInputArea.position({top: newHeight+'px', left: '-15px'});
+                    deviceInputArea.position(
+                        {top: newHeight+'px', left: '-15px'}
+                    );
                 }
                 beginning += styleDict.prompt;
                 extra = '';
@@ -691,7 +810,11 @@ $(function() {
                 updateCursor();
             } else {
                 if (textCursor < extra.length) {
-                    extra = [extra.slice(0, textCursor), typedStr, extra.slice(textCursor)].join('');
+                    extra = [
+                        extra.slice(0, textCursor),
+                        typedStr,
+                        extra.slice(textCursor)
+                    ].join('');
                 } else {
                     extra = extra + typedStr;
                 }
@@ -705,7 +828,10 @@ $(function() {
                 var second = text.indexOf("»");
                 var full = text.substring(first, second+1);
                 var inside = full.substring(1, full.length-1);
-                var replacement = "<span class='highlighted' style='color: "+styleDict.backgroundColor+"; background-color: "+styleDict.textColor+";'>"+inside+"</span>";
+                var replacement = "<span class='highlighted' style='color: "
+                    + styleDict.backgroundColor
+                    + "; background-color: "+styleDict.textColor
+                    + ";'>"+inside+"</span>";
                 text = text.replace(full, replacement);
                 beginning = text;
                 extra = '';
@@ -719,13 +845,14 @@ $(function() {
                 // |_ this MUST be a span element
                 // or it will separate existing span
                 //and cause a text resizing bug
-                //var replacement = "<div style='text-align: center;'>"+inside+"</div>";
+                //var replacement = 
+                //  "<div style='text-align: center;'>"+inside+"</div>";
                 var replacement = "\t\t"+inside;
                 text = text.replace(full, replacement);
                 beginning = text;
                 extra = '';
             }
-            elem.html(text);
+            element.html(text);
             scrollToBottom();
             
             if (!showingSocial && historyCursor > 1) {
@@ -741,57 +868,52 @@ $(function() {
         var keyCode = event.keyCode;
         //console.log("Keydown", event);
         if (finishedTyping) {
-            if (event.keyCode != 9) {
+            if (keyCode != 9) {
                 tabPressed = false;
             }
-            var elem = $(".element");
             var typedStr = String.fromCharCode(keyCode);
-            if (keyCode == 8) { //backspace
+            if (keyCode == 8) {                 //backspace
                 if (extraSize > 0 && textCursor > 0) {
                     if (textCursor < extra.length) {
-                        extra = [extra.slice(0, textCursor-1), extra.slice(textCursor)].join('');
+                        extra = [
+                            extra.slice(0, textCursor-1),
+                            extra.slice(textCursor)
+                        ].join('');
                     } else {
                         extra = extra.substring(0, extra.length-1);
                     }
                     var text = beginning + extra;
-                    elem.html(text);
+                    element.html(text);
                     extraSize --;
                     textCursor --;
                 }
-            } else if (event.keyCode == 9) { //tab
+            } else if (event.keyCode == 9) {    //tab
                 var splitArr = extra.split(" ");
                 getSuggestion(splitArr[splitArr.length-1]);
             } else if (keyCode == 38 || keyCode == 40) {
-                if (keyCode == 38) { //up arrow
-                    localStorage.last = extra;
-                    historyCursor --;
-                } else if (keyCode == 40) { //dn arrow
-                    historyCursor ++;
-                    if (historyCursor < cmds.length) {
-                        extra =     cmds[historyCursor];
-                        extraSize = extra.length;
+                if (keyCode == 38) {            //up arrow
+                    if (historyCursor == cmds.length) {
+                        localStorage.last = extra;
                     }
+                    historyCursor --;
+                } else if (keyCode == 40) {     //dn arrow
+                    historyCursor ++;
                 }
                 if (historyCursor < 0) { historyCursor = 0; }
                 if (historyCursor >= cmds.length) { 
                     historyCursor = cmds.length;
                     extra = localStorage.last;
-                    if (extra) {
-                        extraSize = extra.length;
-                    } else {
-                        extraSize = 0;
-                    }
                 } else {
                     extra = cmds[historyCursor];
                 }
                 extraSize = extra.length;
                 textCursor = extraSize;
-                elem.html(beginning+extra);
+                element.html(beginning+extra);
                 updateCursor();
             } else if (keyCode == 37 || keyCode == 39) {
-                 if (keyCode == 37) { //left arrow
+                 if (keyCode == 37) {           //left arrow
                      if (textCursor > 0) { textCursor --; }
-                } else if (keyCode == 39) { //right arrow
+                } else if (keyCode == 39) {     //right arrow
                     if (textCursor < extra.length) { textCursor ++; }
                 }
                 updateCursor();
@@ -800,7 +922,7 @@ $(function() {
                 //else { return; }
             //}
             if (device) {
-                if (keyCode == 32) { //spacebar, doesn't work on mobile
+                if (keyCode == 32) {        //spacebar, doesn't work on mobile
                     event.stopPropagation();
                     event.preventDefault();
                     displayHtml(" ");
@@ -809,12 +931,8 @@ $(function() {
                             + container.height()
                             - deviceInputArea.innerHeight();
                 deviceInputArea.css('top', newTop);
-                $('body').stop().animate({
-                    scrollTop: (newTop-200)
-                }, 800);
-            } else {
-                scrollToBottom();
             }
+            scrollToBottom();
         }
     }
 });
