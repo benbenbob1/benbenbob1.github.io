@@ -684,16 +684,17 @@ $(function() {
     });
 
     function scrollToBottom() {
-        if (!containerMain.is(':animated')) {
-            var scrollTop = 0;
-            if (!device) {
+        var scrollTop = 0;
+        if (!device) {
+            if (!containerMain.is(':animated')) {
                 scrollTop = container.height();
-            } else {
-                scrollTop = deviceInputArea.offset().top-200;
+                containerMain.stop().animate({
+                    scrollTop: scrollTop
+                }, 400);
             }
-            containerMain.stop().animate({
-                scrollTop: scrollTop
-            }, 400);
+        } else {
+            scrollTop = deviceInputArea.offset().top-400;
+            window.scrollTo(0, scrollTop);
         }
     }
 
