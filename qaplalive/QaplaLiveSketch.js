@@ -163,8 +163,8 @@ function updateRecText() {
                             analyzing = false;
                             el.innerText = "";
                             updateRecText();
-                        }, 6000);
-                    }, 6000)
+                        }, 8000);
+                    }, 3000)
                 }
             }
             if (recordingSecs > 0) {
