@@ -22,8 +22,19 @@ var bgColor = [0,48,81];
 var ltBlueColor = [226,241,251];
 var medBlueColor = [76,147,206];
 var rotateDir = 1;
+var langChoices = [
+"ENGLISH",
+"ENGLISH",
+"ENGLISH",
+"ENGLISH",
+"ENGLISH",
+"ENGLISH", 
+"SPANISH", 
+"CHINESE",
+"CHINESE"
+];
 
-var recordLen = 10; //s
+var recordLen = 5; //s
 
 // no song is playing variables
 
@@ -40,6 +51,7 @@ var recordingText = null, recordingText2 = null;
 var micEnabled = false;
 var recordingTimer = null;
 var recordingSecs = 0;
+var analyzing = false;
 
 function preload() {
     mic = new p5.AudioIn();
@@ -96,6 +108,7 @@ function mouseClicked() {
         newCenterY = 50;
         rotateDir = -1;
         recordingSecs = 0;
+        analyzing = false;
         recordingTimer = window.setInterval(function() {
             recordingSecs += 1;
             updateRecText();
@@ -135,6 +148,23 @@ function updateRecText() {
                 var newText = "Analyzing...";
                 if (recordingText2.innerText != newText) {
                     recordingText2.innerText = newText;
+                }
+
+                if (!analyzing) {
+                    analyzing = true;
+                    window.setTimeout(function() {
+                        var el = document.getElementById("center-text");
+                        var choice = Math.floor(Math.random() * langChoices.length);
+                        mouseClicked();
+                        el.innerText = langChoices[choice];
+                        updateRecText();
+
+                        window.setTimeout(function() {
+                            analyzing = false;
+                            el.innerText = "";
+                            updateRecText();
+                        }, 6000);
+                    }, 6000)
                 }
             }
             if (recordingSecs > 0) {
