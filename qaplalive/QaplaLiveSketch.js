@@ -26,11 +26,7 @@ var langChoices = [
 "ENGLISH",
 "ENGLISH",
 "ENGLISH",
-"ENGLISH",
-"ENGLISH",
-"ENGLISH", 
 "SPANISH", 
-"CHINESE",
 "CHINESE"
 ];
 
