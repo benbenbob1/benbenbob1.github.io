@@ -106,7 +106,7 @@ function mouseClicked() {
         medBlueColor = [76,147,206];
         newCenterY = 0;
         rotateDir = 1;
-        recordingTimer.invalidate();
+        window.clearInterval(recordingTimer);
         recordingTimer = null;
     }
 
