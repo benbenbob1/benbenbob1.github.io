@@ -11,7 +11,7 @@ html, body {
     left: 0;
     right: 0;
     position: absolute;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .container {
@@ -26,7 +26,6 @@ html, body {
 .title_hero {
     color: #28FE14;
     font-family:"Bitstream Vera Sans Mono", "Andale Mono", "Lucida Console", Monaco, monospace;
-    /*font-size: 1em;*/
     font-size: 16px;
 }
 

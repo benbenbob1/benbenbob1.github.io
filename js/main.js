@@ -1,7 +1,7 @@
 $(function() {
     var siteName = "benbrown.science";
     var shortName = "bbs";
-    var version = 0.92;
+    var version = 0.93;
 
     /*                                            *
      *    Feel free to look around!               *
@@ -173,6 +173,7 @@ $(function() {
                         function() {
                             load_css("secret.css", function() {
                                 load_script("js/secret.min.js", function() {
+                                    sendTrackingEvent("entered_secret");
                                     console.log("Woah");
                                 });
                             });
@@ -524,27 +525,26 @@ $(function() {
     }
 
     function setupLinks() {
-        var fbLink = "https://www.facebook.com/benbenbobsoftware";
-        var twitterLink = "http://www.twitter.com/benbenbobsoft";
-        var liLink = "https://www.linkedin.com/in/benebrown";
-        var mailLink = "mailto:benbrown52@gmail.com";
-        var ghLink = "http://www.github.com/benbenbob1";
-        
-        document.getElementById('fb-button').onclick = function(){
-            window.open(fbLink);
+        var links = {
+            "fb-button": "https://www.facebook.com/benbenbobsoftware",
+            "twitter-button": "http://www.twitter.com/benbenbobsoft",
+            "in-button": "https://www.linkedin.com/in/benebrown",
+            "email-button": "mailto:benbrown52@gmail.com",
+            "gh-button" : "http://www.github.com/benbenbob1"
         };
-        document.getElementById('twitter-button').onclick = function(){
-            window.open(twitterLink);
-        };
-        document.getElementById('in-button').onclick = function(){
-            window.open(liLink);
-        };
-        document.getElementById('email-button').onclick = function(){
-            window.location = mailLink;
-        };
-        document.getElementById('gh-button').onclick = function(){
-            window.open(ghLink);
-        };
+
+        for (var id in links) {
+            var elem = document.getElementById(id);
+            if (elem !== null) {
+                console.log("Setting up "+id+" => "+links[id], elem);
+                elem.id = id;
+                elem.href = links[id];
+                elem.onclick = function() {
+                    sendTrackingEvent("clicked "+this.id);
+                    window.open(this.href);
+                }
+            }
+        }
     }
 
     function showSidebar() {
@@ -577,8 +577,15 @@ $(function() {
             + ": command not found";
     }
 
-    //TODO: create error function
+    function sendTrackingEvent(eventText) {
+        if (mixpanel != null) {
+            mixpanel.track(eventText);
+        }
+    }
+
     function evaluate(str) {
+        sendTrackingEvent("typed_command "+str);
+
         var args = str.toString().split(' ');
         var cmd = args[0];
         var result = "";
