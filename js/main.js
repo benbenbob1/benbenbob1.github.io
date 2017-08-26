@@ -1,7 +1,7 @@
 $(function() {
     var siteName = "benbrown.science";
     var shortName = "bbs";
-    var version = 0.93;
+    var version = 0.94;
 
     /*                                            *
      *    Feel free to look around!               *
@@ -29,6 +29,8 @@ $(function() {
     var command = '';
     var cmds = [];
 
+    var interceptInput = true;
+
     var containerMain = $('#containermain');
     var container = $($('.container')[0]);
     var deviceInputArea = $('#textinput');
@@ -41,7 +43,7 @@ $(function() {
         STR_PAD_RIGHT = 1,
         STR_PAD_BOTH = 0;
 
-    //START POINT
+    // START POINT
     
     // set the initial state
     // (only if browser supports the Page Visibility API)
@@ -57,7 +59,7 @@ $(function() {
     
     var finishedTyping = false;
     var timingOrExtra = beenHereBefore?'\nWelcome back!^500':'^1000';
-    //BenBrownCS.com
+
     var toType = siteName
         + ', version '
         + version
@@ -96,8 +98,8 @@ $(function() {
         }
     });
 
-    //Map of commands to their function
-    //function looks like nameOfFunction(args)
+    // Map of commands to their function
+    // function looks like nameOfFunction(args)
     var commands = {
         'about'  : 'aboutCommand'  ,
         'cat'    : 'catCommand'    ,
@@ -115,6 +117,9 @@ $(function() {
         'stuff'  : 'stuffCommand'  ,
         'style'  : 'styleCommand'  ,
         'test'   : 'testCommand'   ,
+        //TODO: finish vim
+        //'vi'     : 'vimCommand'    ,
+        //'vim'    : 'vimCommand'    ,
     };
     //List of commands to be ignored by tab completion
     var ignoreList = [
@@ -228,23 +233,35 @@ $(function() {
         },
         contactCommand: function(args) {
             var result = '';
-            if (args[1] === "-f") { 
-                result = "Opening facebook...";
-                $('#fb-button').click();
-            } else if (args[1] === "-t") {
-                result = "Opening twitter...";
-                $('#twitter-button').click();
-            } else if (args[1] === "-r") {
-                result = _cmdList.resumeCommand();
-            } else if (args[1] === "-l") {
-                result = "Opening LinkedIn...";
-                $('#in-button').click();
-            } else if (args[1] === "-g") {
-                result = "Opening GitHub...";
-                $('#gh-button').click();
-            } else if (args[1] === "-e") {
-                result = "Opening email client...";
-                $('#email-button').click();
+            if (args[1][0] === "-") {
+                var param = args[1][1];
+                switch (param) {
+                    case "f":
+                        result = "Opening facebook...";
+                        $('#fb-button').click();
+                        break;
+                    case "t":
+                        result = "Opening twitter...";
+                        $('#twitter-button').click();
+                        break;
+                    case "r":
+                        result = _cmdList.resumeCommand();
+                        break;
+                    case "l":
+                        result = "Opening LinkedIn...";
+                        $('#in-button').click();
+                        break;
+                    case "g":
+                        result = "Opening GitHub...";
+                        $('#gh-button').click();
+                        break;
+                    case "e":
+                        result = "Opening email client...";
+                        $('#email-button').click();
+                        break;
+                    default:
+                        result = "Unknown parameter \""+param+"\"";
+                }
             } else {
                 result = "usage: contact -ftlger\n"
                     + "\tfind me on:\n"
@@ -396,6 +413,16 @@ $(function() {
         },
         testCommand: function(args) {
             return "success!";
+        },
+        vimCommand: function(args) {
+            interceptInput = false;
+            var vim = new VIM();
+            var taElem = document.createElement("textarea");
+            taElem.id = "ta_VIM";
+            taElem.classList.add("title_hero");
+            containerMain[0].appendChild(taElem);
+            vim.attach_to( taElem );
+            taElem.focus();
         }
     };
 
@@ -536,7 +563,6 @@ $(function() {
         for (var id in links) {
             var elem = document.getElementById(id);
             if (elem !== null) {
-                console.log("Setting up "+id+" => "+links[id], elem);
                 elem.id = id;
                 elem.href = links[id];
                 elem.onclick = function() {
@@ -742,6 +768,7 @@ $(function() {
         if (event.keyCode === 8 || 
             event.keyCode === 9 ||
             (event.keyCode >= 37 && event.keyCode <= 40)) {
+            if (!interceptInput) return;
             event.preventDefault();
             event.stopPropagation();
         }
@@ -780,7 +807,8 @@ $(function() {
     }
 
     function evaluateKeypress(event) {
-        //console.log("Keypress", event);
+        if (!interceptInput) return;
+
         if (finishedTyping) {
             var key = event.keyCode;
             if (key <= 0) { key = event.charCode; }
@@ -873,6 +901,8 @@ $(function() {
     }
 
     function evaluateKeydown(event) {
+        if (!interceptInput) return;
+
         var keyCode = event.keyCode;
         //console.log("Keydown", event);
         if (finishedTyping) {
