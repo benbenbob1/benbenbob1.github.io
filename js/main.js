@@ -1,7 +1,7 @@
 $(function() {
     var siteName = "benbrown.science";
     var shortName = "bbs";
-    var version = 0.94;
+    var version = 0.95;
 
     /*                                            *
      *    Feel free to look around!               *
@@ -47,8 +47,9 @@ $(function() {
     
     // set the initial state
     // (only if browser supports the Page Visibility API)
-    if( document[hidden] !== undefined )
-    onchange({type: document[hidden] ? "blur" : "focus"});
+    if( document[hidden] !== undefined ) {
+        onchange({type: document[hidden] ? "blur" : "focus"});
+    }
 
     try {
         var beenHereBefore = localStorage.getItem('visited');
@@ -117,13 +118,14 @@ $(function() {
         'stuff'  : 'stuffCommand'  ,
         'style'  : 'styleCommand'  ,
         'test'   : 'testCommand'   ,
-        //TODO: finish vim
-        //'vi'     : 'vimCommand'    ,
-        //'vim'    : 'vimCommand'    ,
+        'vi'     : 'vimCommand'    ,
+        'vim'    : 'vimCommand'    
     };
     //List of commands to be ignored by tab completion
     var ignoreList = [
-        'skillz'
+        'skillz',
+        'vi',
+        'vim'
     ];
 
     var parseableFiles = [
@@ -141,7 +143,7 @@ $(function() {
         }
     }
 
-    (function(){ //SHHH...
+    (function(){ //SHHH... I left this unminified just for people like you ;)
         function load_script(url, callback) {
             var scriptElem = document.createElement("script");
             scriptElem.type = "text/javascript";
@@ -196,8 +198,8 @@ $(function() {
                 + "Hello. My name is Ben Brown.\n"
                 + "I am a tinkerer and an inventer as well\n"
                 + "as a full stack engineer.\n\n"
-                + "I am looking for a Fall 2017 internship and\n"
-                + "full time work starting Summmer 2018.\n\n"
+                + "I am looking for a full time work\n"
+                + "starting Summmer 2018.\n\n"
                 + "You can reach me using the <u>contact</u> command\n"
                 + "or view my Resume with <u>resume</u>."
         },
@@ -365,51 +367,49 @@ $(function() {
         }, 
         skillsCommand: function(args) {
             return "\n‘« My Skills »’\nWhat I can do:\n"
-                + "\tJavascript\t[«       » ]\n"
-                + "\tObjective C\t[«       » ]\n"
+                + "\tJavascript\t[«       » ]\t"
                 + "\tC\t\t[«       » ]\n"
                 + "\tCSS\t\t[«       » ]\n"
-                + "\tJava\t\t[«      »  ]\n"
+                + "\tC++\t\t[«      »  ]\n"
+                + "\tObjective-C\t[«      »  ]\n"
+                + "\tPython\t\t[«      »  ]\n"
                 + "\tPHP\t\t[«      »  ]\n"
+                + "\tSwift\t\t[«     »   ]\n"
                 + "\tBash\t\t[«     »   ]\n"
-                + "\tjQuery\t\t[«     »   ]\n"
-                + "\tPython\t\t[«     »   ]\n"
+                + "\tJava\t\t[«     »   ]\n"
                 + "\tMIPS\t\t[«    »    ]\n"
+                + "\tNode\t\t[«    »    ]\n"
                 + "\tSQL\t\t[«    »    ]\n"
-                + "\tSwift\t\t[«    »    ]\n"
-                + "\tC++\t\t[«   »     ]\n"
                 + "\tFlask\t\t[«   »     ]\n"
                 + "\tMongo\t\t[«   »     ]\n"
-                + "\tNode\t\t[«   »     ]\n"
                 + "\tErlang\t\t[«  »      ]\n"
                 + "\nWhat I cannot do:\n"
                 + "\tRaise one eyebrow\n"
                 + "\tBake a banana rhubarb pie\n"
-                + "\tPerform an exorcism";
+                + "\tWhistle while eating a cracker";
         },
         skillzCommand: function(args) {
-            return "\n‘« Ma $killz »’\nYah:\n"
-                + "\tJayscrizzle\t[«       » ]\n"
-                + "\tObjectin-Cizzle\t[«       » ]\n"
+            return "\n‘« Ma $killz »’\nYeh:\n"
+                + "\tJayscrizzle\t[«       » ]\t"
                 + "\tCizzle\t\t[«       » ]\n"
-                + "\tSee Ess Ess\t[«       » ]\n"
-                + "\tJive\t\t[«      »  ]\n"
+                + "\tSee ess ess\t[«       » ]\n"
+                + "\tCizzle++\t[«      »  ]\n"
+                + "\tObjectin-Cizzle\t[«      »  ]\n"
+                + "\tDa snake\t[«      »  ]\n"
                 + "\tHIP\t\t[«      »  ]\n"
+                + "\t$wift\t\t[«     »   ]\n"
                 + "\tBish\t\t[«     »   ]\n"
-                + "\tjQuizzle\t[«     »   ]\n"
-                + "\tDa snake\t[«     »   ]\n"
+                + "\tJive\t\t[«     »   ]\n"
                 + "\t'Sembly\t\t[«    »    ]\n"
+                + "\tReal devs only\t[«    »    ]\n"
                 + "\tMaSQL\t\t[«    »    ]\n"
-                + "\t$wift\t\t[«    »    ]\n"
-                + "\tCizzle++\t[«   »     ]\n"
                 + "\tFlazzzk\t\t[«   »     ]\n"
                 + "\tMongo DeesBees\t[«   »     ]\n"
-                + "\tReal devs only\t[«   »     ]\n"
-                + "\tErlang\t\t[«  »      ]\n"
+                + "\tEera-eeralang\t[«  »      ]\n"
                 + "\nNah:\n"
                 + "\tBrow liftin\n"
-                + "\tRhubarb pie bakin\n"
-                + "\tExorcisin'";
+                + "\tPie bakin\n"
+                + "\tEffectively pull off being an OG";
         },
         testCommand: function(args) {
             return "success!";

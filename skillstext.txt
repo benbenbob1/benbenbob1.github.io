@@ -1,26 +1,62 @@
 What I can do:
-	Javascript		[————9 ] 9
- 	Objective-C		[--------- ] 9
+	Javascript		[--------- ] 9
 	C			[--------- ] 9
 	CSS			[--------- ] 9
-	Java			[--------  ] 8
+	C++			[--------  ] 8
+ 	Objective-C		[--------  ] 8
+	Python			[--------  ] 8
 	PHP			[--------  ] 8
+	Swift			[-------   ] 8
 	Bash			[-------   ] 7
-	jQuery			[-------   ] 7
-	Python			[-------   ] 7
+	Java			[-------   ] 7
 	MIPS			[------    ] 6
+	Node			[------    ] 6
 	SQL			[------    ] 6
-	Swift			[------    ] 6
-	C++			[-----     ] 5
 	Flask			[-----     ] 5
 	Mongo			[-----     ] 5
-	Node			[-----     ] 5
 	Erlang			[----      ] 4
 
+return "\n‘« My Skills »’\nWhat I can do:\n"
++ "\tJavascript\t[«       » ]\t"
++ "\tC\t\t[«       » ]\n"
++ "\tCSS\t\t[«       » ]\n"
++ "\tC++\t\t[«      »  ]\n"
++ "\tObjective-C\t[«      »  ]\n"
++ "\tPython\t\t[«      »  ]\n"
++ "\tPHP\t\t[«      »  ]\n"
++ "\tSwift\t\t[«     »   ]\n"
++ "\tBash\t\t[«     »   ]\n"
++ "\tJava\t\t[«     »   ]\n"
++ "\tMIPS\t\t[«    »    ]\n"
++ "\tNode\t\t[«    »    ]\n"
++ "\tSQL\t\t[«    »    ]\n"
++ "\tFlask\t\t[«   »     ]\n"
++ "\tMongo\t\t[«   »     ]\n"
++ "\tErlang\t\t[«  »      ]\n"
++ "\nWhat I cannot do:\n"
++ "\tRaise one eyebrow\n"
++ "\tBake a banana rhubarb pie\n"
++ "\tWhistle while eating a cracker";
 
-OLD: \n‘« My Skills »’\nWhat I can do:\n\tC\t\t[«          »]\n\tC++\t\t[«        »  ]\n\tObjective-C\t[«          »]\n\tSwift\t\t[«       »   ]\n\tJava\t\t[«        »  ]\n\tHTML5\t\t[«      »    ]\n\tJavaScript\t[«         » ]\n\tjQuery\t\t[«        »  ]\n\tPHP\t\t[«     »     ]\n\tPython\t\t[«       »   ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism
-
-NEW: \n‘« My Skills »’\nWhat I can do:\n\tJavascript\t[«       » ]\n\tObjective C\t[«       » ]\n\tC\t\t[«       » ]\n\tCSS\t\t[«       » ]\n\tJava\t\t[«      »  ]\n\tPHP\t\t[«      »  ]\n\tBash\t\t[«     »   ]\n\tjQuery\t\t[«     »   ]\n\tPython\t\t[«     »   ]\n\tMIPS\t\t[«    »    ]\n\tSQL\t\t[«    »    ]\n\tSwift\t\t[«    »    ]\n\tC++\t\t[«   »     ]\n\tFlask\t\t[«   »     ]\n\tMongo\t\t[«   »     ]\n\tNode\t\t[«   »     ]\n\tErlang\t\t[«  »      ]\n\nWhat I cannot do:\n\tRaise one eyebrow\n\tBake a rhubarb pie\n\tPerform an exorcism
-
-\n<center>« Ma $killz »</center>\nWhat I can programmerate:\n\tCizzle\t\t[«          »]\n\tCizzle++\t[«        »  ]\n\tObjectin-Cizzle\t[«          »]\n\tMakin a brew\t[«        »  ]\n\tHTML$\t\t[«      »    ]\n\tJavaScrizzle\t[«         » ]\n\tjQuerian\t[«        »  ]\n\tHIP\t\t[«     »     ]\n\tDa snake\t[«       »   ]\n\nNah:\n\tBrow liftin\n\tPie bakin\n\tExorcisin'\n\n
+return "\n‘« Ma $killz »’\nYeh:\n"
++ "\tJayscrizzle\t[«       » ]\t"
++ "\tCizzle\t\t[«       » ]\n"
++ "\tSee ess ess\t[«       » ]\n"
++ "\tCizzle++\t[«      »  ]\n"
++ "\tObjectin-Cizzle\t[«      »  ]\n"
++ "\tDa snake\t[«      »  ]\n"
++ "\tHIP\t\t[«      »  ]\n"
++ "\t$wift\t\t[«     »   ]\n"
++ "\tBish\t\t[«     »   ]\n"
++ "\tJive\t\t[«     »   ]\n"
++ "\t'Sembly\t\t[«    »    ]\n"
++ "\tReal devs only\t[«    »    ]\n"
++ "\tMaSQL\t\t[«    »    ]\n"
++ "\tFlazzzk\t\t[«   »     ]\n"
++ "\tMongo DeesBees\t[«   »     ]\n"
++ "\tEera-eeralang\t[«  »      ]\n"
++ "\nNah:\n"
++ "\tBrow liftin\n"
++ "\tPie bakin\n"
++ "\tEffectively pull off being an OG";
 
