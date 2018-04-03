@@ -367,7 +367,7 @@ $(function() {
         }, 
         skillsCommand: function(args) {
             return "\n‘« My Skills »’\nWhat I can do:\n"
-                + "\tJavascript\t[«       » ]\t"
+                + "\tJavascript\t[«       » ]\n"
                 + "\tC\t\t[«       » ]\n"
                 + "\tCSS\t\t[«       » ]\n"
                 + "\tC++\t\t[«      »  ]\n"
@@ -390,7 +390,7 @@ $(function() {
         },
         skillzCommand: function(args) {
             return "\n‘« Ma $killz »’\nYeh:\n"
-                + "\tJayscrizzle\t[«       » ]\t"
+                + "\tJayscrizzle\t[«       » ]\n"
                 + "\tCizzle\t\t[«       » ]\n"
                 + "\tSee ess ess\t[«       » ]\n"
                 + "\tCizzle++\t[«      »  ]\n"
