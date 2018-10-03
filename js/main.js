@@ -1,7 +1,7 @@
 $(function() {
     var siteName = "benbrown.science";
     var shortName = "bbs";
-    var version = 0.95;
+    var version = 0.96;
 
     /*                                            *
      *    Feel free to look around!               *
