@@ -924,7 +924,7 @@ $(function() {
             } else if (event.keyCode == 9) {    //tab
                 var splitArr = extra.split(" ");
                 getSuggestion(splitArr[splitArr.length-1]);
-            } else if (keyCode == 38 || keyCode == 40) {
+            } else if (keyCode == 38 || keyCode == 40 && comds.length > 0) {
                 if (keyCode == 38) {            //up arrow
                     if (historyCursor == cmds.length) {
                         localStorage.last = extra;
