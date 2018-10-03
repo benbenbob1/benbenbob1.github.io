@@ -1,7 +1,7 @@
 $(function() {
     var siteName = "benbrown.science";
     var shortName = "bbs";
-    var version = 0.96;
+    var version = 0.961;
 
     /*                                            *
      *    Feel free to look around!               *
@@ -194,8 +194,6 @@ $(function() {
                 + "Hello. My name is Ben Brown.\n"
                 + "I am a tinkerer and an inventer as well\n"
                 + "as a full stack engineer.\n\n"
-                + "I am looking for a full time work\n"
-                + "starting Summmer 2018.\n\n"
                 + "You can reach me using the <u>contact</u> command\n"
                 + "or view my Resume with <u>resume</u>."
         },
@@ -924,7 +922,7 @@ $(function() {
             } else if (event.keyCode == 9) {    //tab
                 var splitArr = extra.split(" ");
                 getSuggestion(splitArr[splitArr.length-1]);
-            } else if (keyCode == 38 || keyCode == 40 && comds.length > 0) {
+            } else if ((keyCode == 38 || keyCode == 40) && cmds.length > 0) {
                 if (keyCode == 38) {            //up arrow
                     if (historyCursor == cmds.length) {
                         localStorage.last = extra;
