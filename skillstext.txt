@@ -1,20 +1,22 @@
 What I can do:
-	Javascript		[--------- ] 9
-	C			[--------- ] 9
-	CSS			[--------- ] 9
-	C++			[--------  ] 8
- 	Objective-C		[--------  ] 8
-	Python			[--------  ] 8
-	PHP			[--------  ] 8
-	Swift			[-------   ] 8
-	Bash			[-------   ] 7
-	Java			[-------   ] 7
-	MIPS			[------    ] 6
-	Node			[------    ] 6
-	SQL			[------    ] 6
-	Flask			[-----     ] 5
-	Mongo			[-----     ] 5
-	Erlang			[----      ] 4
+    Javascript   [--------- ] 9
+    C            [--------- ] 9
+    CSS          [--------- ] 9
+    C++          [--------  ] 8
+    Objective-C  [--------  ] 8
+    Python       [--------  ] 8
+    PHP          [--------  ] 8
+    Swift        [-------   ] 8
+    Bash         [-------   ] 7
+    C#           [-------   ] 7
+    Java         [-------   ] 7
+    Node         [------    ] 6
+    SQL          [------    ] 6
+    Flask        [-----     ] 5
+    MIPS         [-----     ] 5
+    Mongo        [-----     ] 5
+    Ruby         [-----     ] 5
+    Erlang       [----      ] 4
 
 return "\n‘« My Skills »’\nWhat I can do:\n"
 + "\tJavascript\t[«       » ]\t"

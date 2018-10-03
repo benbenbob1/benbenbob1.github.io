@@ -117,15 +117,11 @@ $(function() {
         'skillz' : 'skillzCommand' , //ignore 
         'stuff'  : 'stuffCommand'  ,
         'style'  : 'styleCommand'  ,
-        'test'   : 'testCommand'   ,
-        'vi'     : 'vimCommand'    ,
-        'vim'    : 'vimCommand'    
+        'test'   : 'testCommand'
     };
     //List of commands to be ignored by tab completion
     var ignoreList = [
-        'skillz',
-        'vi',
-        'vim'
+        'skillz'
     ];
 
     var parseableFiles = [
@@ -143,7 +139,7 @@ $(function() {
         }
     }
 
-    (function(){ //SHHH... I left this unminified just for people like you ;)
+    (function(){ //SHHH... I left this unminified just for you
         function load_script(url, callback) {
             var scriptElem = document.createElement("script");
             scriptElem.type = "text/javascript";
