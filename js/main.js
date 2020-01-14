@@ -229,7 +229,7 @@ $(function() {
         },
         contactCommand: function(args) {
             var result = '';
-            if (args.length >= 1 && args[1][0] === "-") {
+            if (args.length > 1 && args[1][0] === "-") {
                 var param = args[1][1];
                 switch (param) {
                     case "f":
